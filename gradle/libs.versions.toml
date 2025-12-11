@@ -1,4 +1,5 @@
 [versions]
+jvmTarget = "17"
 kotlin = "2.2.21"
 agp = "8.13.0"
 android-compileSdk = "36"
@@ -6,12 +7,13 @@ android-minSdk = "24"
 android-targetSdk = "36"
 
 [plugins]
-kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-composeMultiplatform = "org.jetbrains.compose:1.9.3"
-composeHotReload = "org.jetbrains.compose.hot-reload:1.0.0"
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose-multiplatform = "org.jetbrains.compose:1.9.3"
+compose-hotReload = "org.jetbrains.compose.hot-reload:1.0.0"
+android-application = { id = "com.android.application", version.ref = "agp" }
+
+convention-kotlinMultiplatform = { id = "convention-kotlinMultiplatform" }
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
