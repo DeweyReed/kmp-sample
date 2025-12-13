@@ -39,8 +39,8 @@ android {
 
     defaultConfig {
         applicationId = "com.github.deweyreed.souvenir"
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = libs.versions.version.code.get().toInt()
+        versionName = libs.versions.version.name.get()
     }
     packaging {
         resources {
@@ -49,7 +49,12 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
@@ -61,7 +66,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.github.deweyreed.souvenir"
-            packageVersion = "1.0.0"
+            packageVersion = libs.versions.version.name.get()
         }
     }
 }

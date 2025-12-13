@@ -6,6 +6,9 @@ android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
 
+version-code = "1"
+version-name = "1.0.0"
+
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
