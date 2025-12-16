@@ -20,6 +20,7 @@ kotlin {
 dependencies {
     compileOnly(plugin(libs.plugins.kotlin.multiplatform))
     compileOnly(plugin(libs.plugins.android.application))
+    compileOnly(plugin(libs.plugins.android.kmpLibrary))
 }
 
 private fun plugin(plugin: Provider<PluginDependency>): Provider<String> {
@@ -35,9 +36,13 @@ tasks {
 
 gradlePlugin {
     plugins {
-        register("kotlinMultiplatform") {
-            id = libs.plugins.convention.kotlinMultiplatform.get().pluginId
-            implementationClass = "KotlinMultiplatformConventionPlugin"
+        register("kmpApplication") {
+            id = libs.plugins.convention.kmp.application.get().pluginId
+            implementationClass = "KmpApplicationConventionPlugin"
+        }
+        register("kmpLibrary") {
+            id = libs.plugins.convention.kmp.library.get().pluginId
+            implementationClass = "KmpLibraryConventionPlugin"
         }
     }
 }

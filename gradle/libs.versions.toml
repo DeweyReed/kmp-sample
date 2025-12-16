@@ -15,8 +15,10 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 compose-multiplatform = "org.jetbrains.compose:1.9.3"
 compose-hotReload = "org.jetbrains.compose.hot-reload:1.0.0"
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 
-convention-kotlinMultiplatform = { id = "convention-kotlinMultiplatform" }
+convention-kmp-application = { id = "convention-kmp-application" }
+convention-kmp-library = { id = "convention-kmp-library" }
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
