@@ -36,3 +36,4 @@ plugins {
 include(":composeApp")
 include(":base:api")
 include(":base:data")
+include(":base:presentation")

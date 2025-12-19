@@ -18,7 +18,7 @@ kotlin {
             implementation(libs.ktor.darwin)
         }
         jvmMain.dependencies {
-            implementation(libs.ktor.apache5)
+            implementation(libs.ktor.java)
         }
     }
 }

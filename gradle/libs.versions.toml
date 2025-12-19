@@ -31,4 +31,7 @@ androidx-lifecycle-runtimeCompose = "org.jetbrains.androidx.lifecycle:lifecycle-
 ktor-core = "io.ktor:ktor-client-core:3.3.3"
 ktor-okhttp = "io.ktor:ktor-client-okhttp:3.3.3"
 ktor-darwin = "io.ktor:ktor-client-darwin:3.3.3"
-ktor-apache5 = "io.ktor:ktor-client-apache5:3.3.3"
+ktor-java = "io.ktor:ktor-client-java:3.3.3"
+
+coil-core = "io.coil-kt.coil3:coil-compose:3.3.0"
+coil-ktor = "io.coil-kt.coil3:coil-network-ktor3:3.3.0"
