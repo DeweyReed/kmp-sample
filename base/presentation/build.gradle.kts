@@ -10,6 +10,9 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.base.api)
+
+                api(libs.androidx.lifecycle.viewmodelCompose)
+                api(libs.androidx.lifecycle.runtimeCompose)
                 api(libs.coil.core)
                 implementation(libs.coil.ktor)
             }

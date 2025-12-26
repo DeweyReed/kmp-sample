@@ -11,6 +11,7 @@ version-name = "1.0.0"
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = "org.jetbrains.compose:1.9.3"
 compose-hotReload = "org.jetbrains.compose.hot-reload:1.0.0"
@@ -19,12 +20,14 @@ android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.
 
 convention-kmp-application = { id = "convention-kmp-application" }
 convention-kmp-library = { id = "convention-kmp-library" }
+convention-kmp-compose = { id = "convention-kmp-compose" }
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-coroutinesSwing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2"
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
 
-androidx-activity-compose = "androidx.activity:activity-compose:1.12.1"
+androidx-activity-compose = "androidx.activity:activity-compose:1.12.2"
 androidx-lifecycle-viewmodelCompose = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.6"
 androidx-lifecycle-runtimeCompose = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.9.6"
 
@@ -32,6 +35,8 @@ ktor-core = "io.ktor:ktor-client-core:3.3.3"
 ktor-okhttp = "io.ktor:ktor-client-okhttp:3.3.3"
 ktor-darwin = "io.ktor:ktor-client-darwin:3.3.3"
 ktor-java = "io.ktor:ktor-client-java:3.3.3"
+ktor-contentNegotiation = "io.ktor:ktor-client-content-negotiation:3.3.3"
+ktor-kotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:3.3.3"
 
 coil-core = "io.coil-kt.coil3:coil-compose:3.3.0"
 coil-ktor = "io.coil-kt.coil3:coil-network-ktor3:3.3.0"

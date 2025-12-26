@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.kmp.compose)
 }
 
 kotlin {
@@ -11,6 +12,7 @@ kotlin {
             dependencies {
                 implementation(projects.base.presentation)
                 implementation(projects.feature.home.api)
+                implementation(projects.feature.home.data)
             }
         }
     }

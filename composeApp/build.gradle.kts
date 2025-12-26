@@ -2,8 +2,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     alias(libs.plugins.convention.kmp.application)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.convention.kmp.compose)
     alias(libs.plugins.compose.hotReload)
 }
 
@@ -15,9 +14,6 @@ kotlin {
             implementation(projects.feature.home.api)
             implementation(projects.feature.home.presentation)
             implementation(projects.data)
-            implementation(compose.material3)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
         }
