@@ -7,13 +7,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Composable
 fun Home(modifier: Modifier = Modifier) {
-    val viewModel = remember { HomeViewModel() }
+    val viewModel = metroViewModel<HomeViewModel>()
     LaunchedEffect(Unit) { viewModel.load() }
     val screen by viewModel.screen.collectAsStateWithLifecycle()
     Column(modifier = modifier.fillMaxSize()) {

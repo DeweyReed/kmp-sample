@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -9,8 +10,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.base.data)
-                implementation(projects.feature.home.data)
+                // Classes in data modules need to be visible to metro
+                api(projects.base.data)
+                api(projects.feature.home.data)
             }
         }
     }

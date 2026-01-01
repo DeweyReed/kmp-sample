@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.convention.kmp.application)
     alias(libs.plugins.convention.kmp.compose)
     alias(libs.plugins.compose.hotReload)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -14,7 +15,7 @@ kotlin {
             implementation(projects.feature.home.api)
             implementation(projects.feature.home.presentation)
             implementation(projects.data)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
+            implementation(libs.androidx.lifecycle.viewModelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
         }
         commonTest.dependencies {
