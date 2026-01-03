@@ -9,11 +9,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.zacsweers.metrox.viewmodel.metroViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun Home(modifier: Modifier = Modifier) {
-    val viewModel = metroViewModel<HomeViewModel>()
+    val viewModel = koinViewModel<HomeViewModel>()
     LaunchedEffect(Unit) { viewModel.load() }
     val screen by viewModel.screen.collectAsStateWithLifecycle()
     Column(modifier = modifier.fillMaxSize()) {

@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.convention.kmp.library)
-    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -12,6 +11,8 @@ kotlin {
             api(projects.base.api)
 
             implementation(libs.kotlinx.serialization.json)
+
+            api(libs.koin.core)
 
             api(libs.ktor.core)
             implementation(libs.ktor.contentNegotiation)

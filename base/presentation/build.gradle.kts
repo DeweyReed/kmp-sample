@@ -13,7 +13,7 @@ kotlin {
 
                 api(libs.androidx.lifecycle.viewModelCompose)
                 api(libs.androidx.lifecycle.runtimeCompose)
-                api(libs.metro.viewModelCompose)
+                api(libs.koin.compose.viewModel)
                 api(libs.coil.core)
                 implementation(libs.coil.ktor)
             }

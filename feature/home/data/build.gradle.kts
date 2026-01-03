@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -11,10 +10,12 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(projects.base.data)
-                api(projects.feature.home.api)
+                implementation(projects.base.data)
+                implementation(projects.feature.home.api)
 
                 implementation(libs.kotlinx.serialization.json)
+
+                implementation(libs.koin.core)
             }
         }
     }
