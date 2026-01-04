@@ -11,7 +11,6 @@ kotlin {
             dependencies {
                 implementation(projects.base.data)
                 implementation(projects.feature.home.data)
-                implementation(libs.koin.core)
             }
         }
     }
