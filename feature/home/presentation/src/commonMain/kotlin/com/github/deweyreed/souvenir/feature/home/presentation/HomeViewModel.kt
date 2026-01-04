@@ -30,9 +30,7 @@ internal class HomeViewModel(private val repository: ArticleRepository) : ViewMo
         if (loadJob != null) return
         loadJob = viewModelScope.launch {
             val result = repository.getArticles()
-            if (result.isSuccess) {
-                _screen.value = _screen.value.copy(articles = result.getOrNull() ?: emptyList())
-            }
+            _screen.value = _screen.value.copy(articles = result.getOrNull() ?: emptyList())
         }
     }
 }
