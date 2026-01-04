@@ -2,6 +2,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class KmpComposeConventionPlugin : Plugin<Project> {
@@ -19,6 +20,13 @@ class KmpComposeConventionPlugin : Plugin<Project> {
                     implementation(compose.components.resources)
                     implementation(compose.components.uiToolingPreview)
                 }
+            }
+            extensions.configure<ComposeCompilerGradlePluginExtension> {
+                val isolated = isolated
+                stabilityConfigurationFiles.addAll(
+                    isolated.rootProject.projectDirectory.file("stability-config.conf")
+                        .also { require(it.asFile.exists()) },
+                )
             }
         }
     }
