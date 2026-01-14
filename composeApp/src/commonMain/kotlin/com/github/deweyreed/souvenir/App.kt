@@ -20,6 +20,7 @@ fun App() {
             modules(
                 dataModule,
                 homeModule,
+                appModule,
             )
         },
     ) {

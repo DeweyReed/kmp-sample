@@ -9,6 +9,9 @@ android-targetSdk = "36"
 version-code = "1"
 version-name = "1.0.0"
 
+ksp = "2.3.4"
+room = "2.8.4"
+
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
@@ -17,6 +20,8 @@ compose-multiplatform = "org.jetbrains.compose:1.9.3"
 compose-hotReload = "org.jetbrains.compose.hot-reload:1.0.0"
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }
 
 convention-kmp-application = { id = "convention-kmp-application" }
 convention-kmp-library = { id = "convention-kmp-library" }
@@ -24,12 +29,19 @@ convention-kmp-compose = { id = "convention-kmp-compose" }
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-kotlinx-coroutinesSwing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2"
+kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
+kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
+kotlinx-coroutines-swing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2"
 kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
 
 androidx-activity-compose = "androidx.activity:activity-compose:1.12.2"
 androidx-lifecycle-viewModelCompose = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.6"
 androidx-lifecycle-runtimeCompose = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.9.6"
+androidx-startup = "androidx.startup:startup-runtime:1.2.0"
+
+room-runtime = "androidx.room:room-runtime:2.8.4"
+room-compiler = "androidx.room:room-compiler:2.8.4"
+room-sqliteBundled = "androidx.sqlite:sqlite-bundled:2.6.2"
 
 koin-core = "io.insert-koin:koin-core:4.1.1"
 koin-compose-core = "io.insert-koin:koin-compose:4.1.1"
@@ -44,3 +56,5 @@ ktor-kotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:3.3.3"
 
 coil-core = "io.coil-kt.coil3:coil-compose:3.3.0"
 coil-ktor = "io.coil-kt.coil3:coil-network-ktor3:3.3.0"
+
+paths = "me.sujanpoudel.multiplatform.utils:multiplatform-paths:0.2.2"

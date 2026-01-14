@@ -8,6 +8,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModelOf
@@ -29,8 +31,11 @@ internal class HomeViewModel(private val repository: ArticleRepository) : ViewMo
     fun load() {
         if (loadJob != null) return
         loadJob = viewModelScope.launch {
-            val result = repository.getArticles()
-            _screen.value = _screen.value.copy(articles = result.getOrNull() ?: emptyList())
+            repository.getArticlesFlow().collectLatest { items ->
+                _screen.update {
+                    it.copy(articles = items)
+                }
+            }
         }
     }
 }

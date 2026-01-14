@@ -12,6 +12,8 @@ kotlin {
 
             implementation(libs.kotlinx.serialization.json)
 
+            api(libs.room.runtime)
+
             api(libs.koin.core)
 
             api(libs.ktor.core)
