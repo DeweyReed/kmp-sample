@@ -16,7 +16,7 @@ room = "2.8.4"
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-compose-multiplatform = "org.jetbrains.compose:1.9.3"
+compose-multiplatform = "org.jetbrains.compose:1.10.0"
 compose-hotReload = "org.jetbrains.compose.hot-reload:1.0.0"
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
@@ -33,6 +33,10 @@ kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 kotlinx-coroutines-swing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2"
 kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
+
+compose-foundation = "org.jetbrains.compose.foundation:foundation:1.10.0"
+compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
+compose-resources = "org.jetbrains.compose.components:components-resources:1.10.0"
 
 androidx-activity-compose = "androidx.activity:activity-compose:1.12.2"
 androidx-lifecycle-viewModelCompose = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.6"

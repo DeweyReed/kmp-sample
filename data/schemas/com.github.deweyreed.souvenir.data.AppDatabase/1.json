@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d43bca092c612abf9caa7eff7dbbb84a",
+    "identityHash": "1e378f1ea4fc952a1a7b3b084ab00e5c",
     "entities": [
       {
         "tableName": "Article",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `summary` TEXT NOT NULL, `publishedAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `image_url` TEXT NOT NULL, `summary` TEXT NOT NULL, `published_at` TEXT NOT NULL, `updated_at` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -28,7 +28,7 @@
           },
           {
             "fieldPath": "imageUrl",
-            "columnName": "imageUrl",
+            "columnName": "image_url",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -40,13 +40,13 @@
           },
           {
             "fieldPath": "publishedAt",
-            "columnName": "publishedAt",
+            "columnName": "published_at",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "updatedAt",
-            "columnName": "updatedAt",
+            "columnName": "updated_at",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -61,7 +61,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd43bca092c612abf9caa7eff7dbbb84a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1e378f1ea4fc952a1a7b3b084ab00e5c')"
     ]
   }
 }

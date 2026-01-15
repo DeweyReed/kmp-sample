@@ -9,11 +9,9 @@ import androidx.compose.ui.Modifier
 import com.github.deweyreed.souvenir.data.dataModule
 import com.github.deweyreed.souvenir.feature.home.presentation.Home
 import com.github.deweyreed.souvenir.feature.home.presentation.homeModule
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 
 @Composable
-@Preview
 fun App() {
     KoinApplication(
         application = {

@@ -13,12 +13,9 @@ class KmpComposeConventionPlugin : Plugin<Project> {
 
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.commonMain.dependencies {
-                    val compose =
-                        extensions.getByName("compose")
-                            as org.jetbrains.compose.ComposePlugin.Dependencies
-                    implementation(compose.material3)
-                    implementation(compose.components.resources)
-                    implementation(compose.components.uiToolingPreview)
+                    implementation(libs.findLibrary("compose-foundation").get())
+                    implementation(libs.findLibrary("compose-material3").get())
+                    implementation(libs.findLibrary("compose-resources").get())
                 }
             }
             extensions.configure<ComposeCompilerGradlePluginExtension> {
