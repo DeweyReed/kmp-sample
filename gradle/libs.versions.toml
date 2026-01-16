@@ -17,7 +17,6 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = "org.jetbrains.compose:1.10.0"
-compose-hotReload = "org.jetbrains.compose.hot-reload:1.0.0"
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

@@ -3,7 +3,6 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 plugins {
     alias(libs.plugins.convention.kmp.application)
     alias(libs.plugins.convention.kmp.compose)
-    alias(libs.plugins.compose.hotReload)
 }
 
 kotlin {
