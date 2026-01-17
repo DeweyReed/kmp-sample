@@ -16,6 +16,7 @@ kotlin {
                 api(libs.koin.compose.viewModel)
                 api(libs.coil.core)
                 implementation(libs.coil.ktor)
+                api(libs.navigation)
             }
         }
     }

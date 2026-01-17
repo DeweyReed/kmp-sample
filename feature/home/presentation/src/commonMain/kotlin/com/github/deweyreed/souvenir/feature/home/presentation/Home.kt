@@ -5,12 +5,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -41,16 +48,36 @@ fun Home(modifier: Modifier = Modifier) {
         if (articles != null) {
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Adaptive(240.dp),
-                modifier = Modifier.matchParentSize(),
+                modifier = Modifier
+                    .matchParentSize()
+                    .windowInsetsPadding(
+                        WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
+                    ),
                 contentPadding = PaddingValues(16.dp),
                 verticalItemSpacing = 16.dp,
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
+                item(span = StaggeredGridItemSpan.FullLine) {
+                    Spacer(
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .windowInsetsBottomHeight(
+                                WindowInsets.systemBars.only(WindowInsetsSides.Top)
+                            ),
+                    )
+                }
                 items(items = articles, key = { it.id }) { item ->
                     ArticleItem(
                         title = item.title,
                         imageUrl = item.imageUrl,
                         summary = item.summary,
+                    )
+                }
+                item(span = StaggeredGridItemSpan.FullLine) {
+                    Spacer(
+                        Modifier.windowInsetsBottomHeight(
+                            WindowInsets.systemBars.only(WindowInsetsSides.Bottom)
+                        )
                     )
                 }
             }

@@ -60,4 +60,6 @@ ktor-kotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:3.3.3"
 coil-core = "io.coil-kt.coil3:coil-compose:3.3.0"
 coil-ktor = "io.coil-kt.coil3:coil-network-ktor3:3.3.0"
 
+navigation = "org.jetbrains.androidx.navigation:navigation-compose:2.9.1"
+
 paths = "me.sujanpoudel.multiplatform.utils:multiplatform-paths:0.2.2"
