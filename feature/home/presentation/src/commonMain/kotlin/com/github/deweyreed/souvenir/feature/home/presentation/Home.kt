@@ -1,5 +1,6 @@
 package com.github.deweyreed.souvenir.feature.home.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,7 +40,10 @@ import coil3.request.crossfade
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun Home(modifier: Modifier = Modifier) {
+fun Home(
+    onDetailClick: (Long) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val viewModel = koinViewModel<HomeViewModel>()
     LaunchedEffect(Unit) { viewModel.load() }
     val screen by viewModel.screen.collectAsStateWithLifecycle()
@@ -71,6 +75,7 @@ fun Home(modifier: Modifier = Modifier) {
                         title = item.title,
                         imageUrl = item.imageUrl,
                         summary = item.summary,
+                        modifier = Modifier.clickable { onDetailClick(item.id) },
                     )
                 }
                 item(span = StaggeredGridItemSpan.FullLine) {

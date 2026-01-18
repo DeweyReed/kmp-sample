@@ -10,6 +10,9 @@ interface ArticleDao {
     @Query("SELECT * FROM Article ORDER BY published_at DESC")
     fun getItemsFlow(): Flow<List<ArticleData>>
 
+    @Query("SELECT * FROM Article WHERE id = :id LIMIT 1")
+    fun getItemFlow(id: Long): Flow<ArticleData?>
+
     @Upsert
     suspend fun insertItems(items: List<ArticleData>)
 

@@ -20,7 +20,7 @@ private class ArticleRepositoryImpl(
     private val dao: ArticleDao,
     private val httpClient: HttpClient,
 ) : ArticleRepository {
-    override fun getArticlesFlow(): Flow<List<ArticleEntity>> {
+    override fun getItemsFlow(): Flow<List<ArticleEntity>> {
         return dao.getItemsFlow()
             .onStart {
                 runCatching {
@@ -35,5 +35,9 @@ private class ArticleRepositoryImpl(
             .map { list ->
                 list.map(ArticleData::toEntity)
             }
+    }
+
+    override fun getItemFlow(id: Long): Flow<ArticleEntity?> {
+        return dao.getItemFlow(id).map { it?.toEntity() }
     }
 }

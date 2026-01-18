@@ -12,21 +12,22 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class HomeViewModel(private val repository: ArticleRepository) : ViewModel() {
+internal class DetailViewModel(private val repository: ArticleRepository) : ViewModel() {
     data class Screen(
-        val articles: List<ArticleEntity>? = null,
+        val article: ArticleEntity? = null,
     )
 
     private val _screen: MutableStateFlow<Screen> = MutableStateFlow(Screen())
     val screen: StateFlow<Screen> = _screen.asStateFlow()
     private var loadJob: Job? = null
 
-    fun load() {
-        if (loadJob != null) return
+    fun load(id: Long) {
+        if (loadJob != null && _screen.value.article?.id == id) return
+        loadJob?.cancel()
         loadJob = viewModelScope.launch {
-            repository.getItemsFlow().collectLatest { items ->
+            repository.getItemFlow(id).collectLatest { item ->
                 _screen.update {
-                    it.copy(articles = items)
+                    it.copy(article = item)
                 }
             }
         }
