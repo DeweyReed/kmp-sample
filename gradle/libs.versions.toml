@@ -47,6 +47,9 @@ room-runtime = "androidx.room:room-runtime:2.8.4"
 room-compiler = "androidx.room:room-compiler:2.8.4"
 room-sqliteBundled = "androidx.sqlite:sqlite-bundled:2.6.2"
 
+datastore-core = "androidx.datastore:datastore:1.2.0"
+datastore-preferences = "androidx.datastore:datastore-preferences:1.2.0"
+
 koin-core = "io.insert-koin:koin-core:4.1.1"
 koin-compose-core = "io.insert-koin:koin-compose:4.1.1"
 koin-compose-viewModel = "io.insert-koin:koin-compose-viewmodel:4.1.1"

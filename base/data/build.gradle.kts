@@ -14,6 +14,9 @@ kotlin {
 
             api(libs.room.runtime)
 
+            api(libs.datastore.core)
+            api(libs.datastore.preferences)
+
             api(libs.koin.core)
 
             api(libs.ktor.core)

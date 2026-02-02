@@ -2,12 +2,18 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1e378f1ea4fc952a1a7b3b084ab00e5c",
+    "identityHash": "50cbf0890d068be974a0fd4e2033b070",
     "entities": [
       {
         "tableName": "Article",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `image_url` TEXT NOT NULL, `summary` TEXT NOT NULL, `published_at` TEXT NOT NULL, `updated_at` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`database_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id` INTEGER NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `image_url` TEXT NOT NULL, `summary` TEXT NOT NULL, `published_at` TEXT NOT NULL, `updated_at` TEXT NOT NULL)",
         "fields": [
+          {
+            "fieldPath": "databaseId",
+            "columnName": "database_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "id",
             "columnName": "id",
@@ -52,16 +58,16 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
-            "id"
+            "database_id"
           ]
         }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1e378f1ea4fc952a1a7b3b084ab00e5c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '50cbf0890d068be974a0fd4e2033b070')"
     ]
   }
 }

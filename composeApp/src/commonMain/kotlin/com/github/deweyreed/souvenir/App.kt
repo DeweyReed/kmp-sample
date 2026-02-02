@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.github.deweyreed.souvenir.base.api.dispatchersModule
 import com.github.deweyreed.souvenir.data.dataModule
 import com.github.deweyreed.souvenir.feature.home.presentation.Detail
 import com.github.deweyreed.souvenir.feature.home.presentation.Home
@@ -21,6 +22,7 @@ fun App() {
     KoinApplication(
         application = {
             modules(
+                dispatchersModule,
                 dataModule,
                 homeModule,
                 appModule,

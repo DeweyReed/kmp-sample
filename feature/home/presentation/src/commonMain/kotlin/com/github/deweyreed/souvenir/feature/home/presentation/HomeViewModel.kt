@@ -1,7 +1,9 @@
 package com.github.deweyreed.souvenir.feature.home.presentation
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.deweyreed.souvenir.base.api.Pagination
 import com.github.deweyreed.souvenir.feature.home.api.ArticleEntity
 import com.github.deweyreed.souvenir.feature.home.api.ArticleRepository
 import kotlinx.coroutines.Job
@@ -17,18 +19,33 @@ internal class HomeViewModel(private val repository: ArticleRepository) : ViewMo
         val articles: List<ArticleEntity>? = null,
     )
 
+    @Immutable
+    sealed interface Action {
+        data object LoadMoreItems : Action
+    }
+
     private val _screen: MutableStateFlow<Screen> = MutableStateFlow(Screen())
     val screen: StateFlow<Screen> = _screen.asStateFlow()
     private var loadJob: Job? = null
+    private var itemsPagination: Pagination<ArticleEntity>? = null
 
     fun load() {
         if (loadJob != null) return
         loadJob = viewModelScope.launch {
-            repository.getItemsFlow().collectLatest { items ->
+            val pagination =
+                repository.getItemsPagination(coroutineScope = viewModelScope)
+            itemsPagination = pagination
+            pagination.flow.collectLatest { items ->
                 _screen.update {
                     it.copy(articles = items)
                 }
             }
+        }
+    }
+
+    fun onAction(action: Action) {
+        when (action) {
+            Action.LoadMoreItems -> itemsPagination?.loadMore?.invoke()
         }
     }
 }

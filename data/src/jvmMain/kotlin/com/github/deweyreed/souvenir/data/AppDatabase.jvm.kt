@@ -16,8 +16,8 @@ internal actual val databaseBuilderModule: Module = module {
 }
 
 private fun getDatabaseBuilder(appId: String): RoomDatabase.Builder<AppDatabase> {
-    val dbPath = appDataDirectory(appId) / DATABASE_NAME
+    val path = appDataDirectory(appId) / DATABASE_NAME
     return Room.databaseBuilder<AppDatabase>(
-        name = dbPath.toString(),
+        name = path.toString(),
     )
 }
