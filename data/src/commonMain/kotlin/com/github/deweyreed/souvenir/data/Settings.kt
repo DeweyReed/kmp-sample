@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.github.deweyreed.souvenir.base.api.Settings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -29,6 +30,22 @@ private class SettingsImpl(private val dataStore: DataStore<Preferences>) : Sett
 
     override suspend fun setBoolean(key: String, value: Boolean?) {
         val preferencesKey = booleanPreferencesKey(key)
+        dataStore.edit {
+            if (value != null) {
+                it[preferencesKey] = value
+            } else {
+                it.remove(preferencesKey)
+            }
+        }
+    }
+
+    override fun getStringFlow(key: String): Flow<String?> {
+        val preferencesKey = stringPreferencesKey(key)
+        return dataStore.data.map { it[preferencesKey] }
+    }
+
+    override suspend fun setString(key: String, value: String?) {
+        val preferencesKey = stringPreferencesKey(key)
         dataStore.edit {
             if (value != null) {
                 it[preferencesKey] = value

@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface ArticleRepository {
     fun getItemsPagination(coroutineScope: CoroutineScope): Pagination<ArticleEntity>
-
     fun getItemFlow(id: Long): Flow<ArticleEntity?>
+    suspend fun clearItems()
 }

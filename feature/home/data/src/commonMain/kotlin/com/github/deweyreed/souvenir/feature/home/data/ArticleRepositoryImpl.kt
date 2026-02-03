@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -39,43 +40,54 @@ private class ArticleRepositoryImpl(
     private val httpClient: HttpClient,
 ) : ArticleRepository {
     override fun getItemsPagination(coroutineScope: CoroutineScope): Pagination<ArticleEntity> {
-        var nextPage: String? = null
         return Pagination(
             flow = dao.getItemsFlow()
                 .onStart {
-                    dao.clearItems()
-                    nextPage = null
-                    settings.setBoolean(KEY_HAS_MORE_ITEMS, true)
+                    if (settings.getBoolean(KEY_HAS_MORE_ITEMS) != false &&
+                        dao.getItemCount() == 0
+                    ) {
+                        loadMore(coroutineScope)
+                    }
                 }
                 .map { it.map(ArticleData::toEntity) }
                 .flowOn(ioDispatcher),
-            loadMore = {
-                if (itemsMutex.isLocked) return@Pagination
-                coroutineScope.launch(ioDispatcher) {
-                    if (settings.getBoolean(KEY_HAS_MORE_ITEMS) == false) return@launch
-                    itemsMutex.withLock {
-                        if (settings.getBoolean(KEY_HAS_MORE_ITEMS) == false) return@withLock
-                        val url = nextPage ?: "articles"
-                        val data = httpClient.get(url)
-                            .body<ArticleRemoteData>()
-                        nextPage = data.next
-                        val items = data
-                            .results
-                            .map(ArticleRemoteData.Result::toData)
-                        dao.insertItems(items)
-                        val hasMore = nextPage != null
-                        settings.setBoolean(KEY_HAS_MORE_ITEMS, hasMore)
-                    }
-                }
-            },
+            loadMore = { loadMore(coroutineScope) },
         )
+    }
+
+    private fun loadMore(coroutineScope: CoroutineScope) {
+        if (itemsMutex.isLocked) return
+        coroutineScope.launch(ioDispatcher) {
+            if (settings.getBoolean(KEY_HAS_MORE_ITEMS) == false) return@launch
+            itemsMutex.withLock {
+                if (settings.getBoolean(KEY_HAS_MORE_ITEMS) == false) return@withLock
+                val url = settings.getString(KEY_ITEMS_NEXT_PAGE) ?: "articles"
+                val data = httpClient.get(url)
+                    .body<ArticleRemoteData>()
+                val nextPage = data.next
+                settings.setString(KEY_ITEMS_NEXT_PAGE, nextPage)
+                val items = data
+                    .results
+                    .map(ArticleRemoteData.Result::toData)
+                dao.insertItemsWithoutDuplicates(items)
+                val hasMore = nextPage != null
+                settings.setBoolean(KEY_HAS_MORE_ITEMS, hasMore)
+            }
+        }
     }
 
     override fun getItemFlow(id: Long): Flow<ArticleEntity?> {
         return dao.getItemFlow(id).map { it?.toEntity() }
+    }
+
+    override suspend fun clearItems(): Unit = withContext(ioDispatcher) {
+        dao.clearItems()
+        settings.setBoolean(KEY_HAS_MORE_ITEMS, true)
+        settings.setString(KEY_ITEMS_NEXT_PAGE, null)
     }
 }
 
 private val itemsMutex = Mutex()
 
 private const val KEY_HAS_MORE_ITEMS = "has_more_items"
+private const val KEY_ITEMS_NEXT_PAGE = "items_next_page"

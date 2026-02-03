@@ -32,6 +32,8 @@ internal class HomeViewModel(private val repository: ArticleRepository) : ViewMo
     fun load() {
         if (loadJob != null) return
         loadJob = viewModelScope.launch {
+            repository.clearItems()
+
             val pagination =
                 repository.getItemsPagination(coroutineScope = viewModelScope)
             itemsPagination = pagination
