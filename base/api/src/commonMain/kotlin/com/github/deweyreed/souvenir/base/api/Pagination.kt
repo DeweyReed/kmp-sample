@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 class Pagination<T>(
     val flow: Flow<List<T>>,
-    val loadMore: () -> Unit,
+    val loadMore: suspend () -> Unit,
 )

@@ -34,8 +34,7 @@ internal class HomeViewModel(private val repository: ArticleRepository) : ViewMo
         loadJob = viewModelScope.launch {
             repository.clearItems()
 
-            val pagination =
-                repository.getItemsPagination(coroutineScope = viewModelScope)
+            val pagination = repository.getItemsPagination()
             itemsPagination = pagination
             pagination.flow.collectLatest { items ->
                 _screen.update {
@@ -47,7 +46,11 @@ internal class HomeViewModel(private val repository: ArticleRepository) : ViewMo
 
     fun onAction(action: Action) {
         when (action) {
-            Action.LoadMoreItems -> itemsPagination?.loadMore?.invoke()
+            Action.LoadMoreItems -> {
+                viewModelScope.launch {
+                    itemsPagination?.loadMore?.invoke()
+                }
+            }
         }
     }
 }
