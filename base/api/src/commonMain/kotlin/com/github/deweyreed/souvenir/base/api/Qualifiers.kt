@@ -6,4 +6,5 @@ object Qualifiers {
         object Io
         object Default
     }
+    object DatabaseTransaction
 }

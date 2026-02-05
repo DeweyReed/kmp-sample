@@ -25,6 +25,7 @@ val articleRepositoryModule = module {
         ArticleRepositoryImpl(
             get(named<Qualifiers.Dispatchers.Io>()),
             get(),
+            get(named<Qualifiers.DatabaseTransaction>()),
             get(),
             get(),
         )
@@ -34,6 +35,7 @@ val articleRepositoryModule = module {
 private class ArticleRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher,
     private val settings: Settings,
+    private val runInTransaction: suspend (suspend () -> Unit) -> Unit,
     private val dao: ArticleDao,
     private val httpClient: HttpClient,
 ) : ArticleRepository {
@@ -68,9 +70,11 @@ private class ArticleRepositoryImpl(
             val items = data
                 .results
                 .map(ArticleRemoteData.Result::toData)
-            dao.insertItemsWithoutDuplicates(items)
-            val hasMore = nextPage != null
-            settings.setBoolean(KEY_HAS_MORE_ITEMS, hasMore)
+            runInTransaction {
+                dao.insertItemsWithoutDuplicates(items)
+                val hasMore = nextPage != null
+                settings.setBoolean(KEY_HAS_MORE_ITEMS, hasMore)
+            }
         }
     }
 
