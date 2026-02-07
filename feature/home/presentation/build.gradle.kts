@@ -12,7 +12,6 @@ kotlin {
             dependencies {
                 implementation(projects.base.presentation)
                 implementation(projects.feature.home.api)
-                implementation(libs.compose.icons)
             }
         }
     }
