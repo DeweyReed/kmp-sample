@@ -181,7 +181,7 @@ private fun ArticleItem(
                 Text(
                     text = summary.trim(),
                     style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 10,
+                    maxLines = 5,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
