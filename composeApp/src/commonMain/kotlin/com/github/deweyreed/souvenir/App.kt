@@ -1,5 +1,6 @@
 package com.github.deweyreed.souvenir
 
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,24 +30,30 @@ fun App() {
             )
         },
     ) {
+        val navController = rememberNavController()
         MaterialTheme {
-            val navController = rememberNavController()
-            NavHost(
-                navController = navController,
-                startDestination = Destination.Home,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                composable<Destination.Home> {
-                    Home(
-                        onDetailClick = { navController.navigate(Destination.Detail(it)) },
-                    )
-                }
-                composable<Destination.Detail> {
-                    val route = it.toRoute<Destination.Detail>()
-                    Detail(
-                        id = route.id,
-                        onBack = dropUnlessStarted(block = navController::popBackStack),
-                    )
+            SharedTransitionLayout {
+                NavHost(
+                    navController = navController,
+                    startDestination = Destination.Home,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    composable<Destination.Home> {
+                        Home(
+                            onDetailClick = { navController.navigate(Destination.Detail(it)) },
+                            sharedTransitionScope = this@SharedTransitionLayout,
+                            animatedContentScope = this@composable,
+                        )
+                    }
+                    composable<Destination.Detail> {
+                        val route = it.toRoute<Destination.Detail>()
+                        Detail(
+                            id = route.id,
+                            onBack = dropUnlessStarted(block = navController::popBackStack),
+                            sharedTransitionScope = this@SharedTransitionLayout,
+                            animatedContentScope = this@composable,
+                        )
+                    }
                 }
             }
         }

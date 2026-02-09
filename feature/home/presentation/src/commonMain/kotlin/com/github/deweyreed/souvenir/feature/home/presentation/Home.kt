@@ -2,6 +2,8 @@
 
 package com.github.deweyreed.souvenir.feature.home.presentation
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +21,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,6 +36,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
@@ -52,6 +56,8 @@ import souvenir.feature.home.presentation.generated.resources.feature_home_open_
 @Composable
 fun Home(
     onDetailClick: (Long) -> Unit,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
     val viewModel = koinViewModel<HomeViewModel>()
@@ -61,6 +67,8 @@ fun Home(
         screen = screen,
         onAction = viewModel::onAction,
         onDetailClick = onDetailClick,
+        sharedTransitionScope = sharedTransitionScope,
+        animatedContentScope = animatedContentScope,
         modifier = modifier,
     )
 }
@@ -70,25 +78,32 @@ private fun Screen(
     screen: HomeViewModel.Screen,
     onAction: (HomeViewModel.Action) -> Unit,
     onDetailClick: (Long) -> Unit,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(
-                title = { Text("Spaceflight News") },
-                actions = {
-                    val uriHandler = LocalUriHandler.current
-                    IconButton(
-                        onClick = { uriHandler.openUri("https://spaceflightnewsapi.net/") },
-                    ) {
-                        Icon(
-                            painter = painterResource(Res.drawable.feature_home_open_in_new),
-                            contentDescription = null,
-                        )
-                    }
-                }
-            )
+            sharedTransitionScope.run {
+                TopAppBar(
+                    title = { Text("Spaceflight News") },
+                    actions = {
+                        val uriHandler = LocalUriHandler.current
+                        IconButton(
+                            onClick = { uriHandler.openUri("https://spaceflightnewsapi.net/") },
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.feature_home_open_in_new),
+                                contentDescription = null,
+                            )
+                        }
+                    },
+                    modifier = Modifier.renderInSharedTransitionScopeOverlay(
+                        zIndexInOverlay = 1f,
+                    ),
+                )
+            }
         },
     ) { padding ->
         val items = screen.articles
@@ -97,6 +112,8 @@ private fun Screen(
                 items = items,
                 onItemClick = { onDetailClick(it.id) },
                 onLoadMore = { onAction(HomeViewModel.Action.LoadMoreItems) },
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
                 modifier = Modifier.fillMaxSize(),
                 padding = padding,
             )
@@ -113,6 +130,8 @@ private fun ArticleList(
     items: List<ArticleEntity>,
     onItemClick: (ArticleEntity) -> Unit,
     onLoadMore: () -> Unit,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
     padding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -141,9 +160,12 @@ private fun ArticleList(
     ) {
         items(items = items, key = { it.id }) { item ->
             ArticleItem(
+                id = item.id,
                 title = item.title,
                 imageUrl = item.imageUrl,
                 summary = item.summary,
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
                 modifier = Modifier
                     .animateItem()
                     .clickable { onItemClick(item) },
@@ -154,24 +176,37 @@ private fun ArticleList(
 
 @Composable
 private fun ArticleItem(
+    id: Long,
     title: String,
     imageUrl: String?,
     summary: String,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier
 ) {
     Card(modifier = modifier) {
         Column {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalPlatformContext.current)
-                    .data(imageUrl)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp),
-            )
+            sharedTransitionScope.run {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalPlatformContext.current)
+                        .data(imageUrl)
+                        .crossfade(true)
+                        .placeholderMemoryCacheKey(imageUrl)
+                        .memoryCacheKey(imageUrl)
+                        .build(),
+                    contentDescription = title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .sharedElement(
+                            sharedContentState = sharedTransitionScope
+                                .rememberSharedContentState(id),
+                            animatedVisibilityScope = animatedContentScope,
+                        )
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .clip(CardDefaults.shape),
+                )
+            }
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = title,
