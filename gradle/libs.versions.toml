@@ -1,7 +1,7 @@
 [versions]
 jvmTarget = "17"
-kotlin = "2.2.21"
-agp = "8.13.0"
+kotlin = "2.3.0"
+agp = "8.13.2"
 android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
@@ -9,14 +9,14 @@ android-targetSdk = "36"
 version-code = "1"
 version-name = "1.0.0"
 
-ksp = "2.3.4"
+ksp = "2.3.5"
 room = "2.8.4"
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-compose-multiplatform = "org.jetbrains.compose:1.10.0"
+compose-multiplatform = "org.jetbrains.compose:1.10.1"
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -32,13 +32,13 @@ kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 kotlinx-coroutines-swing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2"
-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0"
 
-compose-foundation = "org.jetbrains.compose.foundation:foundation:1.10.0"
+compose-foundation = "org.jetbrains.compose.foundation:foundation:1.10.1"
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
-compose-resources = "org.jetbrains.compose.components:components-resources:1.10.0"
+compose-resources = "org.jetbrains.compose.components:components-resources:1.10.1"
 
-androidx-activity-compose = "androidx.activity:activity-compose:1.12.2"
+androidx-activity-compose = "androidx.activity:activity-compose:1.12.3"
 androidx-lifecycle-viewModelCompose = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.6"
 androidx-lifecycle-runtimeCompose = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.9.6"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0"
@@ -55,17 +55,17 @@ koin-compose-core = "io.insert-koin:koin-compose:4.1.1"
 koin-compose-viewModel = "io.insert-koin:koin-compose-viewmodel:4.1.1"
 koin-test = "io.insert-koin:koin-test:4.1.1"
 
-ktor-core = "io.ktor:ktor-client-core:3.3.3"
-ktor-okhttp = "io.ktor:ktor-client-okhttp:3.3.3"
-ktor-darwin = "io.ktor:ktor-client-darwin:3.3.3"
-ktor-java = "io.ktor:ktor-client-java:3.3.3"
-ktor-contentNegotiation = "io.ktor:ktor-client-content-negotiation:3.3.3"
-ktor-kotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:3.3.3"
-ktor-mock = "io.ktor:ktor-client-mock:3.3.3"
+ktor-core = "io.ktor:ktor-client-core:3.4.0"
+ktor-okhttp = "io.ktor:ktor-client-okhttp:3.4.0"
+ktor-darwin = "io.ktor:ktor-client-darwin:3.4.0"
+ktor-java = "io.ktor:ktor-client-java:3.4.0"
+ktor-contentNegotiation = "io.ktor:ktor-client-content-negotiation:3.4.0"
+ktor-kotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:3.4.0"
+ktor-mock = "io.ktor:ktor-client-mock:3.4.0"
 
 coil-core = "io.coil-kt.coil3:coil-compose:3.3.0"
 coil-ktor = "io.coil-kt.coil3:coil-network-ktor3:3.3.0"
 
-navigation = "org.jetbrains.androidx.navigation:navigation-compose:2.9.1"
+navigation = "org.jetbrains.androidx.navigation:navigation-compose:2.9.2"
 
 paths = "me.sujanpoudel.multiplatform.utils:multiplatform-paths:0.2.2"
