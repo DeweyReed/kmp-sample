@@ -29,6 +29,7 @@ convention-kmp-compose = { id = "convention-kmp-compose" }
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 kotlinx-coroutines-swing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2"
 kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
@@ -52,6 +53,7 @@ datastore-preferences = "androidx.datastore:datastore-preferences:1.2.0"
 koin-core = "io.insert-koin:koin-core:4.1.1"
 koin-compose-core = "io.insert-koin:koin-compose:4.1.1"
 koin-compose-viewModel = "io.insert-koin:koin-compose-viewmodel:4.1.1"
+koin-test = "io.insert-koin:koin-test:4.1.1"
 
 ktor-core = "io.ktor:ktor-client-core:3.3.3"
 ktor-okhttp = "io.ktor:ktor-client-okhttp:3.3.3"
@@ -59,6 +61,7 @@ ktor-darwin = "io.ktor:ktor-client-darwin:3.3.3"
 ktor-java = "io.ktor:ktor-client-java:3.3.3"
 ktor-contentNegotiation = "io.ktor:ktor-client-content-negotiation:3.3.3"
 ktor-kotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:3.3.3"
+ktor-mock = "io.ktor:ktor-client-mock:3.3.3"
 
 coil-core = "io.coil-kt.coil3:coil-compose:3.3.0"
 coil-ktor = "io.coil-kt.coil3:coil-network-ktor3:3.3.0"

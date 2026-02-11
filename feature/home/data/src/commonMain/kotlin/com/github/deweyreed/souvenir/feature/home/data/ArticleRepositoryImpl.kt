@@ -89,5 +89,5 @@ private class ArticleRepositoryImpl(
     }
 }
 
-private const val KEY_HAS_MORE_ITEMS = "has_more_items"
-private const val KEY_ITEMS_NEXT_PAGE = "items_next_page"
+private const val KEY_HAS_MORE_ITEMS = "article_has_more_items"
+private const val KEY_ITEMS_NEXT_PAGE = "article_items_next_page"
