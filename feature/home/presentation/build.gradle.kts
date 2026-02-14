@@ -6,6 +6,7 @@ plugins {
 kotlin {
     androidLibrary {
         namespace = "com.github.deweyreed.souvenir.feature.home.presentation"
+        androidResources.enable = true
     }
     sourceSets {
         commonMain {
