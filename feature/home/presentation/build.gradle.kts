@@ -15,5 +15,15 @@ kotlin {
                 implementation(projects.feature.home.api)
             }
         }
+        commonTest {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
+                // implementation(libs.koin.test)
+                // implementation(libs.ktor.mock)
+                // implementation(libs.ktor.contentNegotiation)
+                // implementation(libs.ktor.kotlinxJson)
+            }
+        }
     }
 }
