@@ -7,6 +7,9 @@ plugins {
 }
 
 kotlin {
+    androidLibrary {
+        namespace = "com.github.deweyreed.souvenir.app"
+    }
     sourceSets {
         commonMain.dependencies {
             implementation(projects.base.presentation)
@@ -20,37 +23,9 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
-        androidMain.dependencies {
-            implementation(libs.androidx.activity.compose)
-        }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
-        }
-    }
-}
-
-android {
-    namespace = "com.github.deweyreed.souvenir"
-
-    defaultConfig {
-        applicationId = "com.github.deweyreed.souvenir"
-        versionCode = libs.versions.version.code.get().toInt()
-        versionName = libs.versions.version.name.get()
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
 }
