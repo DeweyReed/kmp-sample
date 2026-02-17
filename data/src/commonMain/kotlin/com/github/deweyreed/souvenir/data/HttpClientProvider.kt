@@ -1,4 +1,4 @@
-package com.github.deweyreed.souvenir.base.data
+package com.github.deweyreed.souvenir.data
 
 import com.github.deweyreed.souvenir.base.api.Constants
 import io.ktor.client.HttpClient
@@ -10,7 +10,7 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-val networkModule: Module = module {
+internal val networkModule: Module = module {
     singleOf(::getHttpClient)
 }
 

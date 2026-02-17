@@ -17,13 +17,22 @@ kotlin {
                 implementation(libs.room.runtime)
                 implementation(libs.room.sqliteBundled)
 
+                implementation(libs.ktor.core)
+                implementation(libs.ktor.contentNegotiation)
+                implementation(libs.ktor.kotlinxJson)
+
                 implementation(libs.paths)
             }
         }
-        androidMain {
-            dependencies {
-                implementation(libs.androidx.startup)
-            }
+        androidMain.dependencies {
+            implementation(libs.androidx.startup)
+            implementation(libs.ktor.okhttp)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.darwin)
+        }
+        jvmMain.dependencies {
+            implementation(libs.ktor.java)
         }
     }
 }
