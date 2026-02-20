@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 
 class ArticleDataTest {
     @Test
-    fun toEntity_mapsCorrectFields() {
+    fun `toEntity should map correct fields`() {
         val data = ArticleData(
             id = 123L,
             title = "Test Title",

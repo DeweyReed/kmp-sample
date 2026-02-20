@@ -24,19 +24,17 @@ internal fun Project.configureKmpLibrary(iosFrameworkBaseName: String? = null) {
             }
             minSdk = libs.findVersion("android-minSdk").get().requiredVersion.toInt()
         }
+        val iosTargets = listOf(
+            iosArm64(),
+            iosSimulatorArm64(),
+        )
         if (iosFrameworkBaseName != null) {
-            listOf(
-                iosArm64(),
-                iosSimulatorArm64()
-            ).forEach { iosTarget ->
+            iosTargets.forEach { iosTarget ->
                 iosTarget.binaries.framework {
                     baseName = iosFrameworkBaseName
                     isStatic = true
                 }
             }
-        } else {
-            iosArm64()
-            iosSimulatorArm64()
         }
         jvm()
     }

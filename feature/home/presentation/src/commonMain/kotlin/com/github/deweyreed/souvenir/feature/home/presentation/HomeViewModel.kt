@@ -1,6 +1,5 @@
 package com.github.deweyreed.souvenir.feature.home.presentation
 
-import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.deweyreed.souvenir.base.api.Pagination
@@ -19,7 +18,6 @@ internal class HomeViewModel(private val repository: ArticleRepository) : ViewMo
         val articles: List<ArticleEntity>? = null,
     )
 
-    @Immutable
     sealed interface Action {
         data object LoadMoreItems : Action
     }

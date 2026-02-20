@@ -9,6 +9,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -25,7 +26,6 @@ val articleRepositoryModule = module {
         ArticleRepositoryImpl(
             get(named<Qualifiers.Dispatchers.Io>()),
             get(),
-            get(named<Qualifiers.DatabaseTransaction>()),
             get(),
             get(),
         )
@@ -35,7 +35,6 @@ val articleRepositoryModule = module {
 private class ArticleRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher,
     private val settings: Settings,
-    private val runInTransaction: suspend (suspend () -> Unit) -> Unit,
     private val dao: ArticleDao,
     private val httpClient: HttpClient,
 ) : ArticleRepository {
@@ -62,18 +61,21 @@ private class ArticleRepositoryImpl(
         if (settings.getBoolean(KEY_HAS_MORE_ITEMS) == false) return@withContext
         itemsMutex.withLock {
             if (settings.getBoolean(KEY_HAS_MORE_ITEMS) == false) return@withLock
-            val url = settings.getString(KEY_ITEMS_NEXT_PAGE) ?: "articles"
-            val data = httpClient.get(url)
-                .body<ArticleRemoteData>()
-            val nextPage = data.next
-            settings.setString(KEY_ITEMS_NEXT_PAGE, nextPage)
-            val items = data
-                .results
-                .map(ArticleRemoteData.Result::toData)
-            runInTransaction {
-                dao.insertItemsWithoutDuplicates(items)
+            try {
+                val url = settings.getString(KEY_ITEMS_NEXT_PAGE) ?: "articles"
+                val data =
+                    httpClient.get(url)
+                        .body<ArticleRemoteData>()
+                val nextPage = data.next
+                settings.setString(KEY_ITEMS_NEXT_PAGE, nextPage)
+                val items = data
+                    .results
+                    .map(ArticleRemoteData.Result::toData)
                 val hasMore = nextPage != null
+                dao.insertItemsWithoutDuplicates(items)
                 settings.setBoolean(KEY_HAS_MORE_ITEMS, hasMore)
+            } catch (_: Exception) {
+                ensureActive()
             }
         }
     }

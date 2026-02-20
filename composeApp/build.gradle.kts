@@ -15,9 +15,8 @@ kotlin {
             implementation(projects.base.presentation)
             implementation(projects.feature.home.presentation)
             implementation(projects.data)
+
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.androidx.lifecycle.viewModelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.koin.compose.core)
         }
         commonTest.dependencies {
@@ -25,7 +24,6 @@ kotlin {
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 }

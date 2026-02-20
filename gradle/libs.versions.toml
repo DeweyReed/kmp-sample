@@ -39,7 +39,7 @@ compose-foundation = "org.jetbrains.compose.foundation:foundation:1.10.1"
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
 compose-resources = "org.jetbrains.compose.components:components-resources:1.10.1"
 
-androidx-activity-compose = "androidx.activity:activity-compose:1.12.3"
+androidx-activity-compose = "androidx.activity:activity-compose:1.12.4"
 androidx-lifecycle-viewModelCompose = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.6"
 androidx-lifecycle-runtimeCompose = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.9.6"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0"

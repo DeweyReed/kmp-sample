@@ -7,7 +7,12 @@ import androidx.room.RoomDatabaseConstructor
 import com.github.deweyreed.souvenir.feature.home.data.ArticleDao
 import com.github.deweyreed.souvenir.feature.home.data.ArticleData
 
-@Database(entities = [ArticleData::class], version = 1)
+@Database(
+    entities = [
+        ArticleData::class,
+    ],
+    version = 1,
+)
 @ConstructedBy(AppDatabaseConstructor::class)
 internal abstract class AppDatabase : RoomDatabase() {
     abstract fun getArticleDao(): ArticleDao

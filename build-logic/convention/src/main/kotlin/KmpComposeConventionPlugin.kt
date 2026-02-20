@@ -8,6 +8,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class KmpComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
+            apply(plugin = libs.findPlugin("kotlin-multiplatform").get().get().pluginId)
             apply(plugin = libs.findPlugin("compose-compiler").get().get().pluginId)
             apply(plugin = libs.findPlugin("compose-multiplatform").get().get().pluginId)
 

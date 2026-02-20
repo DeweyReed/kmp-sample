@@ -47,12 +47,6 @@ class ArticleRepositoryTest : KoinTest {
                         testDispatcher
                     }
                     single<Settings> { FakeSettings() }
-                    single<suspend (suspend () -> Unit) -> Unit>(
-                        named<Qualifiers.DatabaseTransaction>()
-                    ) {
-                        val transaction: suspend (suspend () -> Unit) -> Unit = { it() }
-                        transaction
-                    }
                     single<ArticleDao> { FakeArticleDao() }
                     single<HttpClient> {
                         val mockEngine = MockEngine { _ ->
@@ -86,7 +80,7 @@ class ArticleRepositoryTest : KoinTest {
     }
 
     @Test
-    fun getItemsPagination_loadsMoreOnStart_whenEmpty() = runTest(testDispatcher) {
+    fun `getItemsPagination should load more on start when empty`() = runTest(testDispatcher) {
         mockResponse.value = """
             {
                 "count": 1,
@@ -116,7 +110,8 @@ class ArticleRepositoryTest : KoinTest {
     }
 
     @Test
-    fun getItemsPagination_doesNotLoadMoreOnStart_whenNotEmpty() = runTest(testDispatcher) {
+    fun `getItemsPagination shouldn't load more on start when not empty`() =
+        runTest(testDispatcher) {
         mockResponse.value = """
             {
                 "count": 1,
@@ -159,7 +154,7 @@ class ArticleRepositoryTest : KoinTest {
     }
 
     @Test
-    fun getItemsPagination_loadMore_fetchesAndSavesItems() = runTest(testDispatcher) {
+    fun `getItemsPagination loadMore should fetch and save items`() = runTest(testDispatcher) {
         mockResponse.value = """
             {
                 "count": 1,
@@ -188,7 +183,7 @@ class ArticleRepositoryTest : KoinTest {
     }
 
     @Test
-    fun getItemFlow_returnsItem() = runTest(testDispatcher) {
+    fun `getItemFlow should return item`() = runTest(testDispatcher) {
         val article = ArticleData(
             id = 1,
             title = "T",
@@ -205,13 +200,13 @@ class ArticleRepositoryTest : KoinTest {
     }
 
     @Test
-    fun getItemFlow_returnsNull_whenNotFound() = runTest(testDispatcher) {
+    fun `getItemFlow should return null when not found`() = runTest(testDispatcher) {
         val result = repository.getItemFlow(1).first()
         assertNull(result)
     }
 
     @Test
-    fun clearItems_resetsSettingsAndDao() = runTest(testDispatcher) {
+    fun `clearItems should reset settings and dao`() = runTest(testDispatcher) {
         dao.insertItems(
             listOf(
                 ArticleData(

@@ -15,5 +15,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
         }
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
+        }
     }
 }
