@@ -1,63 +1,65 @@
-## Souvenir
+# KMP Project
 
-<https://spaceflightnewsapi.net/>
+A multi-module Kotlin Multiplatform (KMP) application built to demonstrate modern development best
+practices. It consumes the [Spaceflight News API](https://spaceflightnewsapi.net/) to provide a
+list-detail view of the latest spaceflight articles.
 
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop (JVM).
+## Screenshots
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform
-  applications.
-  It contains several subfolders:
-    - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-    - Other folders are for Kotlin code that will be compiled for only the platform indicated in the
-      folder name.
-      For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-      the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-      Similarly, if you want to edit the Desktop (JVM) specific part,
-      the [jvmMain](./composeApp/src/jvmMain/kotlin)
-      folder is the appropriate location.
+TODO
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose
-  Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for
-  your project.
+## Features
 
-### Build and Run Android Application
+- **Cross-Platform UI** - 100% shared UI using Compose Multiplatform
+- **Offline-First** - Caches network requests using Room (KMP) for seamless offline viewing
+- **Modern State Management** - Unidirectional Data Flow using the MVI (Model-View-Intent) pattern
+- **Deep Modularization** - Strict separation of concerns via feature-based multi-module
+  architecture
 
-To build and run the development version of the Android app, use the run configuration from the run
-widget
-in your IDE’s toolbar or build it directly from the terminal:
+## Architecture
 
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+This project utilizes **Clean Architecture** combined with a multi-module setup managed by **Gradle
+Convention Plugins** (`build-logic`). The project is split into the following layers:
 
-### Build and Run Desktop (JVM) Application
+- `base` - Core utilities and base classes
+- `feature` - Feature modules
+    - `api` - Public models and interfaces
+    - `data` - Internal implementation (Repositories, Network, Database)
+    - `presentation` - UI, ViewModels, and Composables
+- `data` - Core module that collects feature `data` modules
+- `composeApp` - The application module that wires dependencies together using dependency injection
+- `androidApp`, `iosApp` - The app entry points
 
-To build and run the development version of the desktop app, use the run configuration from the run
-widget
-in your IDE’s toolbar or run it directly from the terminal:
+## Tech Stack
 
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+### Architecture
 
-### Build and Run iOS Application
+- [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) - Targeting Android, iOS,
+  and Desktop
+- **Gradle Convention Plugins** & **Version Catalogs** - Scalable, type-safe build logic
+- [Koin](https://insert-koin.io/) - Dependency Injection
+- [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs/flow.html) -
+  Asynchronous programming
 
-To build and run the development version of the iOS app, use the run configuration from the run
-widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+### UI
 
----
+- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/) - UI framework
+- [AndroidX Navigation Compose](https://developer.android.com/jetpack/compose/navigation) -
+  Type-safe navigation
+- [Coil](https://coil-kt.github.io/coil/) - Image loading
 
-Learn more
-about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+### Data
+
+- [Ktor](https://ktor.io/) - Asynchronous HTTP client
+- [Room (KMP)](https://developer.android.com/kotlin/multiplatform/room) - Local SQLite database
+- [DataStore](https://developer.android.com/kotlin/multiplatform/datastore) - Local storage
+- [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization) - JSON parsing
+
+### Testing
+
+- `kotlin-test` & `koin-test` - Unit testing
+- `ktor-client-mock` - Mocking API responses
+
+## License
+
+[Apache License 2.0](LICENSE)
