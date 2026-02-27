@@ -1,4 +1,6 @@
-# KMP Project
+# KMP Sample
+
+[![Develop](https://github.com/DeweyReed/kmp-sample/actions/workflows/develop.yml/badge.svg)](https://github.com/DeweyReed/kmp-sample/actions/workflows/develop.yml)
 
 A multi-module Kotlin Multiplatform (KMP) application built to demonstrate modern development best
 practices. It consumes the [Spaceflight News API](https://spaceflightnewsapi.net/) to provide a
