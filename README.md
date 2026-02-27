@@ -62,6 +62,10 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 - `kotlin-test` & `koin-test` - Unit testing
 - `ktor-client-mock` - Mocking API responses
 
+### CI/CD
+
+- **GitHub Actions** - Continuous Integration for automated building and testing
+
 ## License
 
 [Apache License 2.0](LICENSE)
