@@ -8,7 +8,7 @@ list-detail view of the latest spaceflight articles.
 
 ## Screenshots
 
-TODO
+![Screenshot](docs/images/screenshot.webp)
 
 ## Features
 
