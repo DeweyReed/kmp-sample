@@ -66,6 +66,12 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 
 - **GitHub Actions** - Continuous Integration for automated building and testing
 
+## Roadmap
+
+- [ ] Replace Nav2 with Nav3
+- [ ] Replace Koin with Metro
+- [ ] Add `feature:settings`
+
 ## License
 
 [Apache License 2.0](LICENSE)
