@@ -7,7 +7,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "com.github.deweyreed.souvenir.app"
     }
     sourceSets {

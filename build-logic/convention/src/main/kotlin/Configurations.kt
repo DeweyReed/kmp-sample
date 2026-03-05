@@ -1,4 +1,4 @@
-import com.android.build.api.dsl.androidLibrary
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -15,7 +15,7 @@ internal fun Project.configureKmpLibrary(iosFrameworkBaseName: String? = null) {
     apply(plugin = libs.findPlugin("android-kmpLibrary").get().get().pluginId)
 
     extensions.configure<KotlinMultiplatformExtension> {
-        androidLibrary {
+        configure<KotlinMultiplatformAndroidLibraryTarget> {
             compileSdk {
                 version = release(
                     libs.findVersion("android-compileSdk")

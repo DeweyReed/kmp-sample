@@ -3,7 +3,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "com.github.deweyreed.souvenir.base.presentation"
     }
     sourceSets {

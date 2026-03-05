@@ -5,7 +5,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "com.github.deweyreed.souvenir.feature.home.data"
     }
     sourceSets {
