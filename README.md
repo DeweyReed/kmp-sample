@@ -68,9 +68,10 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 
 ## Roadmap
 
-- [ ] Replace Nav2 with Nav3
 - [ ] Replace Koin with Metro
 - [ ] Add `feature:settings`
+- [ ] Build binaries with CI
+- [ ] Replace Nav2 with Nav3
 
 ## License
 
