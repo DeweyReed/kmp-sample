@@ -1,6 +1,6 @@
 [versions]
 jvmTarget = "17"
-kotlin = "2.3.10"
+kotlin = "2.3.20"
 agp = "9.0.1"
 android-compileSdk = "36"
 android-minSdk = "24"
@@ -16,7 +16,7 @@ room = "2.8.4"
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-compose-multiplatform = "org.jetbrains.compose:1.10.1"
+compose-multiplatform = "org.jetbrains.compose:1.10.2"
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -34,11 +34,11 @@ kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1
 kotlinx-coroutines-swing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2"
 kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0"
 
-compose-foundation = "org.jetbrains.compose.foundation:foundation:1.10.1"
+compose-foundation = "org.jetbrains.compose.foundation:foundation:1.10.2"
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
-compose-resources = "org.jetbrains.compose.components:components-resources:1.10.1"
+compose-resources = "org.jetbrains.compose.components:components-resources:1.10.2"
 
-androidx-activity-compose = "androidx.activity:activity-compose:1.12.4"
+androidx-activity-compose = "androidx.activity:activity-compose:1.13.0"
 androidx-lifecycle-viewModelCompose = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.6"
 androidx-lifecycle-runtimeCompose = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.9.6"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0"
@@ -47,8 +47,8 @@ room-runtime = "androidx.room:room-runtime:2.8.4"
 room-compiler = "androidx.room:room-compiler:2.8.4"
 room-sqliteBundled = "androidx.sqlite:sqlite-bundled:2.6.2"
 
-datastore-core = "androidx.datastore:datastore:1.2.0"
-datastore-preferences = "androidx.datastore:datastore-preferences:1.2.0"
+datastore-core = "androidx.datastore:datastore:1.2.1"
+datastore-preferences = "androidx.datastore:datastore-preferences:1.2.1"
 
 koin-core = "io.insert-koin:koin-core:4.1.1"
 koin-compose-core = "io.insert-koin:koin-compose:4.1.1"
