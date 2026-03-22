@@ -39,7 +39,7 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 - [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) - Targeting Android, iOS,
   and Desktop
 - **Gradle Convention Plugins** & **Version Catalogs** - Scalable, type-safe build logic
-- [Koin](https://insert-koin.io/) - Dependency Injection
+- [Metro](https://zacsweers.github.io/metro/) - Dependency Injection
 - [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs/flow.html) -
   Asynchronous programming
 
@@ -59,7 +59,7 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 
 ### Testing
 
-- `kotlin-test` & `koin-test` - Unit testing
+- `kotlin-test` - Unit testing
 - `ktor-client-mock` - Mocking API responses
 
 ### CI/CD
@@ -68,7 +68,7 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 
 ## Roadmap
 
-- [ ] Replace Koin with Metro(Kotlin 2.3.20)
+- [x] Replace Koin with Metro(Kotlin 2.3.20)
 - [ ] Add `feature:settings`
 - [ ] Build binaries with CI
 - [ ] Replace Nav2 with Nav3
