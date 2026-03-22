@@ -1,7 +1,5 @@
 package com.github.deweyreed.souvenir.feature.home.data
 
-import com.github.deweyreed.souvenir.base.api.Qualifiers
-import com.github.deweyreed.souvenir.base.api.Settings
 import com.github.deweyreed.souvenir.feature.home.api.ArticleRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -12,72 +10,43 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.ByteReadChannel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
-import org.koin.test.KoinTest
-import org.koin.test.inject
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class ArticleRepositoryTest : KoinTest {
-    private val testDispatcher: CoroutineDispatcher = StandardTestDispatcher()
+class ArticleRepositoryTest {
+    private val testDispatcher = StandardTestDispatcher()
 
-    private val repository: ArticleRepository by inject()
-    private val dao: ArticleDao by inject()
+    private val dao: ArticleDao = FakeArticleDao()
+    private val repository: ArticleRepository = ArticleRepositoryImpl(
+        ioDispatcher = testDispatcher,
+        settings = FakeSettings(),
+        dao = dao,
+        httpClient = HttpClient(
+            MockEngine { _ ->
+                respond(
+                    content = ByteReadChannel(mockResponse.value),
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                )
+            }
+        ) {
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                    }
+                )
+            }
+        },
+    )
 
     private val mockResponse = MutableStateFlow("{}")
-
-    @BeforeTest
-    fun setUp() {
-        startKoin {
-            modules(
-                module {
-                    single<CoroutineDispatcher>(named<Qualifiers.Dispatchers.Io>()) {
-                        testDispatcher
-                    }
-                    single<Settings> { FakeSettings() }
-                    single<ArticleDao> { FakeArticleDao() }
-                    single<HttpClient> {
-                        val mockEngine = MockEngine { _ ->
-                            respond(
-                                content = ByteReadChannel(mockResponse.value),
-                                status = HttpStatusCode.OK,
-                                headers = headersOf(
-                                    HttpHeaders.ContentType, "application/json",
-                                ),
-                            )
-                        }
-                        HttpClient(mockEngine) {
-                            install(ContentNegotiation) {
-                                json(
-                                    Json {
-                                        ignoreUnknownKeys = true
-                                    }
-                                )
-                            }
-                        }
-                    }
-                },
-                articleRepositoryModule,
-            )
-        }
-    }
-
-    @AfterTest
-    fun tearDown() {
-        stopKoin()
-    }
 
     @Test
     fun `getItemsPagination should load more on start when empty`() = runTest(testDispatcher) {
@@ -112,7 +81,7 @@ class ArticleRepositoryTest : KoinTest {
     @Test
     fun `getItemsPagination shouldn't load more on start when not empty`() =
         runTest(testDispatcher) {
-        mockResponse.value = """
+            mockResponse.value = """
             {
                 "count": 1,
                 "results": [
@@ -132,26 +101,26 @@ class ArticleRepositoryTest : KoinTest {
             }
         """.trimIndent()
 
-        dao.insertItems(
-            listOf(
-                ArticleData(
-                    id = 1,
-                    title = "T",
-                    url = "U",
-                    imageUrl = "I",
-                    summary = "S",
-                    publishedAt = "P",
-                    updatedAt = "U",
-                ),
+            dao.insertItems(
+                listOf(
+                    ArticleData(
+                        id = 1,
+                        title = "T",
+                        url = "U",
+                        imageUrl = "I",
+                        summary = "S",
+                        publishedAt = "P",
+                        updatedAt = "U",
+                    ),
+                )
             )
-        )
 
-        val pagination = repository.getItemsPagination()
-        val items = pagination.flow.first()
+            val pagination = repository.getItemsPagination()
+            val items = pagination.flow.first()
 
-        assertEquals(1, items.size)
-        assertEquals(1, dao.getItemCount())
-    }
+            assertEquals(1, items.size)
+            assertEquals(1, dao.getItemCount())
+        }
 
     @Test
     fun `getItemsPagination loadMore should fetch and save items`() = runTest(testDispatcher) {
