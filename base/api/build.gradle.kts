@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -10,7 +11,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(libs.kotlinx.coroutines.core)
-            api(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)

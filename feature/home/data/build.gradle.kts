@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -19,7 +20,6 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.test)
                 implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.koin.test)
                 implementation(libs.ktor.mock)
                 implementation(libs.ktor.contentNegotiation)
                 implementation(libs.ktor.kotlinxJson)

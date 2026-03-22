@@ -48,8 +48,8 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.github.deweyreed.souvenir.feature.home.api.ArticleEntity
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.jetbrains.compose.resources.painterResource
-import org.koin.compose.viewmodel.koinViewModel
 import souvenir.feature.home.presentation.generated.resources.Res
 import souvenir.feature.home.presentation.generated.resources.feature_home_open_in_new
 
@@ -60,7 +60,7 @@ fun Home(
     animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel = koinViewModel<HomeViewModel>()
+    val viewModel = metroViewModel<HomeViewModel>()
     LaunchedEffect(Unit) { viewModel.load() }
     val screen by viewModel.screen.collectAsStateWithLifecycle()
     Screen(

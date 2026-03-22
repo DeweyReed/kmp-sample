@@ -14,7 +14,7 @@ import com.github.deweyreed.souvenir.feature.home.data.ArticleData
     version = 1,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
-internal abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun getArticleDao(): ArticleDao
 }
 

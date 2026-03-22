@@ -4,32 +4,24 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.dropUnlessStarted
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.github.deweyreed.souvenir.base.api.baseModule
-import com.github.deweyreed.souvenir.data.dataModule
 import com.github.deweyreed.souvenir.feature.home.presentation.Detail
 import com.github.deweyreed.souvenir.feature.home.presentation.Home
-import com.github.deweyreed.souvenir.feature.home.presentation.homeModule
+import dev.zacsweers.metro.createGraph
+import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import kotlinx.serialization.Serializable
-import org.koin.compose.KoinApplication
+
+private val graph by lazy { createGraph<AppGraph>() }
 
 @Composable
 fun App() {
-    KoinApplication(
-        application = {
-            modules(
-                baseModule,
-                dataModule,
-                homeModule,
-                appModule,
-            )
-        },
-    ) {
+    CompositionLocalProvider(LocalMetroViewModelFactory provides graph.metroViewModelFactory) {
         val navController = rememberNavController()
         MaterialTheme {
             SharedTransitionLayout {

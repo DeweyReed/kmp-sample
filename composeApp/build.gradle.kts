@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.convention.kmp.application)
     alias(libs.plugins.convention.kmp.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -17,7 +18,6 @@ kotlin {
             implementation(projects.data)
 
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.koin.compose.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -5,6 +5,9 @@ import com.github.deweyreed.souvenir.base.api.Qualifiers
 import com.github.deweyreed.souvenir.base.api.Settings
 import com.github.deweyreed.souvenir.feature.home.api.ArticleEntity
 import com.github.deweyreed.souvenir.feature.home.api.ArticleRepository
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -17,23 +20,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import org.koin.core.qualifier.named
-import org.koin.dsl.bind
-import org.koin.dsl.module
 
-val articleRepositoryModule = module {
-    factory {
-        ArticleRepositoryImpl(
-            get(named<Qualifiers.Dispatchers.Io>()),
-            get(),
-            get(),
-            get(),
-        )
-    }.bind<ArticleRepository>()
-}
-
-private class ArticleRepositoryImpl(
-    private val ioDispatcher: CoroutineDispatcher,
+@ContributesBinding(AppScope::class)
+@Inject
+class ArticleRepositoryImpl(
+    @param:Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,
     private val settings: Settings,
     private val dao: ArticleDao,
     private val httpClient: HttpClient,

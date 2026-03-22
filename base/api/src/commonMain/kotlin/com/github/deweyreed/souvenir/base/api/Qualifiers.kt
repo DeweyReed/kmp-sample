@@ -1,9 +1,16 @@
 package com.github.deweyreed.souvenir.base.api
 
+import dev.zacsweers.metro.Qualifier
+
 object Qualifiers {
-    object AppId
+    @Qualifier
+    annotation class AppId
+
     object Dispatchers {
-        object Io
-        object Default
+        @Qualifier
+        annotation class Io
+
+        @Qualifier
+        annotation class Default
     }
 }

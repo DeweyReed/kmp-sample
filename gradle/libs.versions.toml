@@ -20,6 +20,7 @@ compose-multiplatform = "org.jetbrains.compose:1.10.2"
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+metro = "dev.zacsweers.metro:0.11.2"
 room = { id = "androidx.room", version.ref = "room" }
 
 convention-kmp-application = { id = "convention-kmp-application" }
@@ -33,6 +34,7 @@ kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 kotlinx-coroutines-swing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2"
 kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0"
+kotlinx-io = "org.jetbrains.kotlinx:kotlinx-io-core:0.8.2"
 
 compose-foundation = "org.jetbrains.compose.foundation:foundation:1.10.2"
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
@@ -50,10 +52,7 @@ room-sqliteBundled = "androidx.sqlite:sqlite-bundled:2.6.2"
 datastore-core = "androidx.datastore:datastore:1.2.1"
 datastore-preferences = "androidx.datastore:datastore-preferences:1.2.1"
 
-koin-core = "io.insert-koin:koin-core:4.1.1"
-koin-compose-core = "io.insert-koin:koin-compose:4.1.1"
-koin-compose-viewModel = "io.insert-koin:koin-compose-viewmodel:4.1.1"
-koin-test = "io.insert-koin:koin-test:4.1.1"
+metro-viewModelCompose = "dev.zacsweers.metro:metrox-viewmodel-compose:0.11.2"
 
 ktor-core = "io.ktor:ktor-client-core:3.4.1"
 ktor-okhttp = "io.ktor:ktor-client-okhttp:3.4.1"

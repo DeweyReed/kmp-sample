@@ -32,8 +32,8 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.jetbrains.compose.resources.painterResource
-import org.koin.compose.viewmodel.koinViewModel
 import souvenir.feature.home.presentation.generated.resources.Res
 import souvenir.feature.home.presentation.generated.resources.feature_home_back
 
@@ -45,7 +45,7 @@ fun Detail(
     animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel = koinViewModel<DetailViewModel>()
+    val viewModel = metroViewModel<DetailViewModel>()
     LaunchedEffect(id) { viewModel.load(id) }
     val screen by viewModel.screen.collectAsStateWithLifecycle()
     Screen(

@@ -7,22 +7,18 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.github.deweyreed.souvenir.base.api.Settings
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import okio.Path.Companion.toPath
-import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
-import org.koin.dsl.module
 
-internal val settingsModule = module {
-    includes(dataStoreModule)
-    singleOf(::SettingsImpl).bind<Settings>()
-}
-
-internal expect val dataStoreModule: Module
-
-private class SettingsImpl(private val dataStore: DataStore<Preferences>) : Settings {
+@SingleIn(AppScope::class)
+@ContributesBinding(AppScope::class)
+@Inject
+class SettingsImpl(private val dataStore: DataStore<Preferences>) : Settings {
     override fun getBooleanFlow(key: String): Flow<Boolean?> {
         val preferencesKey = booleanPreferencesKey(key)
         return dataStore.data.map { it[preferencesKey] }
@@ -55,6 +51,8 @@ private class SettingsImpl(private val dataStore: DataStore<Preferences>) : Sett
         }
     }
 }
+
+expect interface DataStoreProvider
 
 internal fun createDataStore(producePath: () -> String): DataStore<Preferences> {
     return PreferenceDataStoreFactory.createWithPath(

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.metro)
     alias(libs.plugins.room)
 }
 
@@ -11,8 +12,10 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.base.data)
-                implementation(projects.feature.home.data)
+                api(projects.base.data)
+                api(projects.feature.home.data)
+
+                implementation(libs.kotlinx.io)
 
                 implementation(libs.room.runtime)
                 implementation(libs.room.sqliteBundled)

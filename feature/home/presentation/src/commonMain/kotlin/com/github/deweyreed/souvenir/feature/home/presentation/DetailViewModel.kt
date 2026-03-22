@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.deweyreed.souvenir.feature.home.api.ArticleEntity
 import com.github.deweyreed.souvenir.feature.home.api.ArticleRepository
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +16,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class DetailViewModel(private val repository: ArticleRepository) : ViewModel() {
+@Inject
+@ViewModelKey(DetailViewModel::class)
+@ContributesIntoMap(AppScope::class)
+class DetailViewModel(private val repository: ArticleRepository) : ViewModel() {
     data class Screen(
         val article: ArticleEntity? = null,
     )
