@@ -15,7 +15,7 @@ kotlin {
                 api(projects.base.data)
                 api(projects.feature.home.data)
 
-                implementation(libs.kotlinx.io)
+                implementation(libs.kotlinx.io.byteString)
 
                 implementation(libs.room.runtime)
                 implementation(libs.room.sqliteBundled)
