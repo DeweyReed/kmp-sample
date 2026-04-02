@@ -34,8 +34,8 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.jetbrains.compose.resources.painterResource
-import souvenir.feature.home.presentation.generated.resources.Res
-import souvenir.feature.home.presentation.generated.resources.feature_home_back
+import souvenir.base.presentation.generated.resources.back
+import souvenir.base.presentation.generated.resources.Res as ResBase
 
 @Composable
 fun Detail(
@@ -80,7 +80,7 @@ private fun Screen(
                         navigationIcon = {
                             IconButton(onClick = onBack) {
                                 Icon(
-                                    painter = painterResource(Res.drawable.feature_home_back),
+                                    painter = painterResource(ResBase.drawable.back),
                                     contentDescription = "Back",
                                 )
                             }

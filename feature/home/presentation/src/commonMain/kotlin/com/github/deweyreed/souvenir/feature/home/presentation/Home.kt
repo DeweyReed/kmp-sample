@@ -52,34 +52,38 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.jetbrains.compose.resources.painterResource
 import souvenir.feature.home.presentation.generated.resources.Res
 import souvenir.feature.home.presentation.generated.resources.feature_home_open_in_new
+import souvenir.feature.home.presentation.generated.resources.feature_home_settings
 
 @Composable
 fun Home(
-    onDetailClick: (Long) -> Unit,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
+    onDetailClick: (Long) -> Unit,
+    onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel = metroViewModel<HomeViewModel>()
     LaunchedEffect(Unit) { viewModel.load() }
     val screen by viewModel.screen.collectAsStateWithLifecycle()
     Screen(
+        sharedTransitionScope = sharedTransitionScope,
+        animatedContentScope = animatedContentScope,
         screen = screen,
         onAction = viewModel::onAction,
         onDetailClick = onDetailClick,
-        sharedTransitionScope = sharedTransitionScope,
-        animatedContentScope = animatedContentScope,
+        onSettingsClick = onSettingsClick,
         modifier = modifier,
     )
 }
 
 @Composable
 private fun Screen(
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     screen: HomeViewModel.Screen,
     onAction: (HomeViewModel.Action) -> Unit,
     onDetailClick: (Long) -> Unit,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
+    onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -95,7 +99,13 @@ private fun Screen(
                         ) {
                             Icon(
                                 painter = painterResource(Res.drawable.feature_home_open_in_new),
-                                contentDescription = null,
+                                contentDescription = "API Documentation",
+                            )
+                        }
+                        IconButton(onClick = onSettingsClick) {
+                            Icon(
+                                painter = painterResource(Res.drawable.feature_home_settings),
+                                contentDescription = "Settings",
                             )
                         }
                     },

@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.github.deweyreed.souvenir.feature.home.presentation.Detail
 import com.github.deweyreed.souvenir.feature.home.presentation.Home
+import com.github.deweyreed.souvenir.feature.settings.presentation.Settings
 import dev.zacsweers.metro.createGraph
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import kotlinx.serialization.Serializable
@@ -32,9 +33,12 @@ fun App() {
                 ) {
                     composable<Destination.Home> {
                         Home(
-                            onDetailClick = { navController.navigate(Destination.Detail(it)) },
                             sharedTransitionScope = this@SharedTransitionLayout,
                             animatedContentScope = this@composable,
+                            onDetailClick = { navController.navigate(Destination.Detail(it)) },
+                            onSettingsClick = dropUnlessStarted {
+                                navController.navigate(Destination.Settings)
+                            },
                         )
                     }
                     composable<Destination.Detail> {
@@ -44,6 +48,12 @@ fun App() {
                             onBack = dropUnlessStarted(block = navController::popBackStack),
                             sharedTransitionScope = this@SharedTransitionLayout,
                             animatedContentScope = this@composable,
+                        )
+                    }
+                    composable<Destination.Settings> {
+                        Settings(
+                            onBack = dropUnlessStarted(block = navController::popBackStack),
+                            sharedTransitionScope = this@SharedTransitionLayout,
                         )
                     }
                 }
@@ -58,4 +68,7 @@ sealed interface Destination {
 
     @Serializable
     data class Detail(val id: Long) : Destination
+
+    @Serializable
+    data object Settings : Destination
 }

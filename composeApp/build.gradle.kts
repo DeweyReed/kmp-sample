@@ -15,6 +15,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.base.presentation)
             implementation(projects.feature.home.presentation)
+            implementation(projects.feature.settings.presentation)
             implementation(projects.data)
 
             implementation(libs.kotlinx.serialization.json)
