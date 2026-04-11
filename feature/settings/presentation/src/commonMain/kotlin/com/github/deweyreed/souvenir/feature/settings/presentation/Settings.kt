@@ -3,13 +3,10 @@
 package com.github.deweyreed.souvenir.feature.settings.presentation
 
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -80,19 +77,10 @@ fun Settings(
             modifier = Modifier.fillMaxSize(),
         ) {
             composable<Destination.Settings> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
+                SettingsScreen(
+                    onLibraries = { controller.navigate(Destination.Libraries) },
                     contentPadding = padding,
-                ) {
-                    item {
-                        ListItem(
-                            headlineContent = { Text("Licenses") },
-                            modifier = Modifier.clickable {
-                                controller.navigate(Destination.Libraries)
-                            },
-                        )
-                    }
-                }
+                )
             }
             composable<Destination.Libraries> {
                 val libraries by produceLibraries {

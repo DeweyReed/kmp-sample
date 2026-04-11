@@ -69,7 +69,7 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 ## Roadmap
 
 - [x] Replace Koin with Metro(Kotlin 2.3.20)
-- [ ] Add `feature:settings`
+- [x] Add `feature:settings`
 - [ ] Build binaries with CI
 - [ ] Replace Nav2 with Nav3
 
