@@ -6,6 +6,7 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal val Project.libs: VersionCatalog
@@ -41,5 +42,18 @@ internal fun Project.configureKmpLibrary(iosFrameworkBaseName: String? = null) {
             }
         }
         jvm()
+    }
+}
+
+internal fun Project.confitureCompose() {
+    apply(plugin = libs.findPlugin("compose-multiplatform").get().get().pluginId)
+    apply(plugin = libs.findPlugin("compose-compiler").get().get().pluginId)
+
+    extensions.configure<ComposeCompilerGradlePluginExtension> {
+        val isolated = isolated
+        stabilityConfigurationFiles.addAll(
+            isolated.rootProject.projectDirectory.file("stability-config.conf")
+                .also { require(it.asFile.exists()) },
+        )
     }
 }

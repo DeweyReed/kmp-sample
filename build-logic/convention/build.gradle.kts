@@ -19,8 +19,8 @@ kotlin {
 
 dependencies {
     compileOnly(plugin(libs.plugins.kotlin.multiplatform))
-    compileOnly(plugin(libs.plugins.compose.compiler))
     compileOnly(plugin(libs.plugins.compose.multiplatform))
+    compileOnly(plugin(libs.plugins.compose.compiler))
     compileOnly(plugin(libs.plugins.android.kmpLibrary))
 }
 
