@@ -50,10 +50,7 @@ internal fun SettingsScreen(
             if (showThemeDialog) {
                 ThemeDialog(
                     currentTheme = screen.theme,
-                    onThemeSelected = {
-                        showThemeDialog = false
-                        viewModel.onAction(SettingsViewModel.Action.SetTheme(it))
-                    },
+                    onThemeSelected = { viewModel.onAction(SettingsViewModel.Action.SetTheme(it)) },
                     onDismiss = { showThemeDialog = false },
                 )
             }
