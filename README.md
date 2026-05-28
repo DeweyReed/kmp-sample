@@ -29,8 +29,8 @@ Convention Plugins** (`build-logic`). The project is split into the following la
     - `data` - Internal implementation (Repositories, Network, Database)
     - `presentation` - UI, ViewModels, and Composables
 - `data` - Core module that collects feature `data` modules
-- `composeApp` - The application module that wires dependencies together using dependency injection
-- `androidApp`, `iosApp` - The app entry points
+- `shared` - The module that wires dependencies together using dependency injection
+- `androidApp`, `iosApp`, `desktopApp` - The app entry points
 
 ## Tech Stack
 

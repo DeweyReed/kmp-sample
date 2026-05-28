@@ -7,7 +7,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.github.deweyreed.souvenir.app"
+        namespace = "com.github.deweyreed.souvenir.shared"
     }
     sourceSets {
         commonMain.dependencies {
