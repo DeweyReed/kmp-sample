@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @Inject
-@ViewModelKey(DetailViewModel::class)
+@ViewModelKey
 @ContributesIntoMap(AppScope::class)
 class DetailViewModel(private val repository: ArticleRepository) : ViewModel() {
     data class Screen(

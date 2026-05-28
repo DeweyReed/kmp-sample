@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @Inject
-@ViewModelKey(AppViewModel::class)
+@ViewModelKey
 @ContributesIntoMap(AppScope::class)
 class AppViewModel(
     @Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,

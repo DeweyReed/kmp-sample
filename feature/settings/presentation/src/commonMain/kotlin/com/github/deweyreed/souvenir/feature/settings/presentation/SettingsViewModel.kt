@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @Inject
-@ViewModelKey(SettingsViewModel::class)
+@ViewModelKey
 @ContributesIntoMap(AppScope::class)
 class SettingsViewModel(
     @Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,
