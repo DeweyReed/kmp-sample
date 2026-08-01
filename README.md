@@ -70,11 +70,10 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 
 - [x] Replace Koin with Metro(Kotlin 2.3.20)
 - [x] Add `feature:settings`
-- [ ] Nav 3
+- [ ] Replace Nav2 with Nav3
 - [ ] Room 3
 - [ ] Add icons
 - [ ] Build binaries with CI
-- [ ] Replace Nav2 with Nav3
 
 ## License
 
