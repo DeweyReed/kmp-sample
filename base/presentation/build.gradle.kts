@@ -14,7 +14,6 @@ kotlin {
                 api(projects.base.api)
 
                 api(libs.androidx.lifecycle.viewModelCompose)
-                api(libs.androidx.lifecycle.runtimeCompose)
 
                 api(libs.metro.viewModelCompose)
 

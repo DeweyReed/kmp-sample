@@ -17,9 +17,6 @@ internal fun Project.configureKmpLibrary(iosFrameworkBaseName: String? = null) {
     apply(plugin = libs.findPlugin("android-kmpLibrary").get().get().pluginId)
 
     extensions.configure<KotlinMultiplatformExtension> {
-        compilerOptions {
-            freeCompilerArgs.set(listOf("-Xannotation-default-target=param-property"))
-        }
         configure<KotlinMultiplatformAndroidLibraryTarget> {
             compileSdk {
                 version = release(
