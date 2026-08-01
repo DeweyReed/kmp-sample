@@ -2,9 +2,9 @@
 jvmTarget = "17"
 kotlin = "2.3.21"
 agp = "9.3.1"
-android-compileSdk = "36"
+android-compileSdk = "37"
 android-minSdk = "24"
-android-targetSdk = "36"
+android-targetSdk = "37"
 
 version-code = "1"
 version-name = "1.0.0"
