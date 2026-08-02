@@ -37,16 +37,13 @@ tasks {
 
 gradlePlugin {
     plugins {
-        register("kmpApplication") {
-            id = libs.plugins.convention.kmp.application.get().pluginId
+        register(libs.plugins.convention.kmp.application.get().pluginId) {
             implementationClass = "KmpApplicationConventionPlugin"
         }
-        register("kmpLibrary") {
-            id = libs.plugins.convention.kmp.library.get().pluginId
+        register(libs.plugins.convention.kmp.library.get().pluginId) {
             implementationClass = "KmpLibraryConventionPlugin"
         }
-        register("kmpCompose") {
-            id = libs.plugins.convention.kmp.compose.get().pluginId
+        register(libs.plugins.convention.kmp.compose.get().pluginId) {
             implementationClass = "KmpComposeConventionPlugin"
         }
     }
