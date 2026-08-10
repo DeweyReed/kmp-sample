@@ -1,5 +1,7 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
-    alias(libs.plugins.convention.kmp.application)
+    alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.convention.kmp.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.metro)
@@ -8,6 +10,12 @@ plugins {
 kotlin {
     android {
         namespace = "com.github.deweyreed.souvenir.shared"
+    }
+    targets.withType<KotlinNativeTarget>().configureEach {
+        binaries.framework {
+            baseName = "Shared"
+            isStatic = true
+        }
     }
     sourceSets {
         commonMain.dependencies {

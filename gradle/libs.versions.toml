@@ -24,7 +24,6 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 metro = "dev.zacsweers.metro:1.4.0"
 room = { id = "androidx.room", version.ref = "room" }
 
-convention-kmp-application = { id = "convention-kmp-application" }
 convention-kmp-library = { id = "convention-kmp-library" }
 convention-kmp-compose = { id = "convention-kmp-compose" }
 

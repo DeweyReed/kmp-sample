@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 internal val Project.libs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-internal fun Project.configureKmpLibrary(iosFrameworkBaseName: String? = null) {
+internal fun Project.configureKmpLibrary() {
     apply(plugin = libs.findPlugin("kotlin-multiplatform").get().get().pluginId)
     apply(plugin = libs.findPlugin("android-kmpLibrary").get().get().pluginId)
 
@@ -26,18 +26,8 @@ internal fun Project.configureKmpLibrary(iosFrameworkBaseName: String? = null) {
             }
             minSdk = libs.findVersion("android-minSdk").get().requiredVersion.toInt()
         }
-        val iosTargets = listOf(
-            iosArm64(),
-            iosSimulatorArm64(),
-        )
-        if (iosFrameworkBaseName != null) {
-            iosTargets.forEach { iosTarget ->
-                iosTarget.binaries.framework {
-                    baseName = iosFrameworkBaseName
-                    isStatic = true
-                }
-            }
-        }
+        iosArm64()
+        iosSimulatorArm64()
         jvm()
     }
 }
