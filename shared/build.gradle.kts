@@ -17,6 +17,7 @@ kotlin {
             implementation(projects.data)
 
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.navigation)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

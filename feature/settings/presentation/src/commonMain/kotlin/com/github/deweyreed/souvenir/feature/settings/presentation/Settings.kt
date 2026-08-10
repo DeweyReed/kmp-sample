@@ -11,20 +11,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
-import com.mikepenz.aboutlibraries.ui.compose.produceLibraries
-import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
+import souvenir.base.presentation.generated.resources.Res
 import souvenir.base.presentation.generated.resources.back
-import souvenir.feature.settings.presentation.generated.resources.Res
-import souvenir.base.presentation.generated.resources.Res as ResBase
 
 @Composable
 fun Settings(
@@ -32,34 +22,16 @@ fun Settings(
     sharedTransitionScope: SharedTransitionScope,
     modifier: Modifier = Modifier,
 ) {
-    val controller = rememberNavController()
     Scaffold(
         modifier = modifier,
         topBar = {
             sharedTransitionScope.run {
                 TopAppBar(
-                    title = {
-                        val destination =
-                            controller.currentBackStackEntryAsState().value?.destination
-                        Text(
-                            when {
-                                destination?.hasRoute<Destination.Libraries>() == true -> {
-                                    "Libraries"
-                                }
-                                else -> "Settings"
-                            }
-                        )
-                    },
+                    title = { Text("Settings") },
                     navigationIcon = {
-                        IconButton(
-                            onClick = {
-                                if (!controller.popBackStack()) {
-                                    onBack()
-                                }
-                            },
-                        ) {
+                        IconButton(onClick = onBack) {
                             Icon(
-                                painter = painterResource(ResBase.drawable.back),
+                                painter = painterResource(Res.drawable.back),
                                 contentDescription = "Back",
                             )
                         }
@@ -71,35 +43,9 @@ fun Settings(
             }
         },
     ) { padding ->
-        NavHost(
-            navController = controller,
-            startDestination = Destination.Settings,
+        SettingsScreen(
+            contentPadding = padding,
             modifier = Modifier.fillMaxSize(),
-        ) {
-            composable<Destination.Settings> {
-                SettingsScreen(
-                    onLibraries = { controller.navigate(Destination.Libraries) },
-                    contentPadding = padding,
-                )
-            }
-            composable<Destination.Libraries> {
-                val libraries by produceLibraries {
-                    Res.readBytes("files/aboutLibraries.json").decodeToString()
-                }
-                LibrariesContainer(
-                    libraries = libraries,
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = padding,
-                )
-            }
-        }
+        )
     }
-}
-
-private sealed interface Destination {
-    @Serializable
-    data object Settings : Destination
-
-    @Serializable
-    data object Libraries : Destination
 }

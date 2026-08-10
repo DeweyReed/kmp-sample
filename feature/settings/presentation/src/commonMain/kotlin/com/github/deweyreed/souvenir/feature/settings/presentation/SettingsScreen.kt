@@ -28,7 +28,6 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Composable
 internal fun SettingsScreen(
-    onLibraries: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues.Zero,
 ) {
@@ -54,12 +53,6 @@ internal fun SettingsScreen(
                     onDismiss = { showThemeDialog = false },
                 )
             }
-        }
-        item {
-            ListItem(
-                headlineContent = { Text("Licenses") },
-                modifier = Modifier.clickable(onClick = onLibraries),
-            )
         }
     }
 }

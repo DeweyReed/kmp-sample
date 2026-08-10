@@ -19,8 +19,6 @@ kotlin {
 
                 api(libs.coil.core)
                 implementation(libs.coil.ktor)
-
-                api(libs.navigation)
             }
         }
     }
