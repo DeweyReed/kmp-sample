@@ -12,12 +12,17 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+data class AppUiState(
+    val theme: AppTheme = AppTheme.SYSTEM,
+)
 
 @Inject
 @ViewModelKey
@@ -26,19 +31,19 @@ class AppViewModel(
     @Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,
     private val settings: Settings,
 ) : ViewModel() {
-    data class Screen(
-        val theme: AppTheme = AppTheme.SYSTEM,
-    )
-
-    private val _screen = MutableStateFlow(Screen())
-    val screen: StateFlow<Screen> = _screen.asStateFlow()
+    private val _uiState = MutableStateFlow(AppUiState())
+    val uiState: StateFlow<AppUiState> = _uiState.asStateFlow()
     private var loadJob: Job? = null
 
     fun load() {
-        if (loadJob != null) return
+        if (loadJob?.isActive == true) return
         loadJob = viewModelScope.launch(ioDispatcher) {
-            settings.getAppThemeFlow().collectLatest { appTheme ->
-                _screen.update { it.copy(theme = appTheme) }
+            coroutineScope {
+                launch {
+                    settings.getAppThemeFlow().collectLatest { theme ->
+                        _uiState.update { it.copy(theme = theme) }
+                    }
+                }
             }
         }
     }
