@@ -13,6 +13,7 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,38 +21,43 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+internal data class SettingsUiState(
+    val theme: AppTheme = AppTheme.SYSTEM,
+)
+
+internal sealed interface SettingsAction {
+    data class SetTheme(val theme: AppTheme) : SettingsAction
+}
+
 @Inject
 @ViewModelKey
 @ContributesIntoMap(AppScope::class)
-class SettingsViewModel(
+internal class SettingsViewModel(
     @Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,
     private val settings: Settings,
 ) : ViewModel() {
-    data class Screen(
-        val theme: AppTheme = AppTheme.SYSTEM,
-    )
-
-    sealed interface Action {
-        data class SetTheme(val theme: AppTheme) : Action
-    }
-
-    private val _screen = MutableStateFlow(Screen())
-    val screen: StateFlow<Screen> = _screen.asStateFlow()
+    private val _uiState = MutableStateFlow(SettingsUiState())
+    val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
     private var loadJob: Job? = null
 
     fun load() {
         if (loadJob != null) return
+        loadJob?.cancel()
         loadJob = viewModelScope.launch(ioDispatcher) {
-            settings.getAppThemeFlow().collectLatest { theme ->
-                _screen.update { it.copy(theme = theme) }
+            coroutineScope {
+                launch {
+                    settings.getAppThemeFlow().collectLatest { theme ->
+                        _uiState.update { it.copy(theme = theme) }
+                    }
+                }
             }
         }
     }
 
-    fun onAction(action: Action) {
+    fun onAction(action: SettingsAction) {
         when (action) {
-            is Action.SetTheme -> {
-                viewModelScope.launch {
+            is SettingsAction.SetTheme -> {
+                viewModelScope.launch(ioDispatcher) {
                     settings.setAppTheme(action.theme)
                 }
             }

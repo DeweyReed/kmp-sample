@@ -44,7 +44,7 @@ class SettingsViewModelTest {
     fun `initial theme should be system`() = runTest {
         viewModel.load()
         advanceUntilIdle()
-        assertEquals(AppTheme.SYSTEM, viewModel.screen.value.theme)
+        assertEquals(AppTheme.SYSTEM, viewModel.uiState.value.theme)
     }
 
     @Test
@@ -54,11 +54,11 @@ class SettingsViewModelTest {
 
         settings.setAppTheme(AppTheme.DARK)
         advanceUntilIdle()
-        assertEquals(AppTheme.DARK, viewModel.screen.value.theme)
+        assertEquals(AppTheme.DARK, viewModel.uiState.value.theme)
 
         settings.setAppTheme(AppTheme.LIGHT)
         advanceUntilIdle()
-        assertEquals(AppTheme.LIGHT, viewModel.screen.value.theme)
+        assertEquals(AppTheme.LIGHT, viewModel.uiState.value.theme)
     }
 
     @Test
@@ -66,7 +66,7 @@ class SettingsViewModelTest {
         viewModel.load()
         advanceUntilIdle()
 
-        viewModel.onAction(SettingsViewModel.Action.SetTheme(AppTheme.DARK))
+        viewModel.onAction(SettingsAction.SetTheme(AppTheme.DARK))
         advanceUntilIdle()
 
         assertEquals(AppTheme.DARK.name, settings.themeName)

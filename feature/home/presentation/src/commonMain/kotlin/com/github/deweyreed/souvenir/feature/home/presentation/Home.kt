@@ -56,34 +56,34 @@ import souvenir.feature.home.presentation.generated.resources.feature_home_setti
 
 @Composable
 fun Home(
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
     onDetailClick: (Long) -> Unit,
     onSettingsClick: () -> Unit,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
     val viewModel = metroViewModel<HomeViewModel>()
-    LaunchedEffect(Unit) { viewModel.load() }
-    val screen by viewModel.screen.collectAsStateWithLifecycle()
-    Screen(
-        sharedTransitionScope = sharedTransitionScope,
-        animatedContentScope = animatedContentScope,
-        screen = screen,
+    LaunchedEffect(viewModel) { viewModel.load() }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    HomeUi(
+        uiState = uiState,
         onAction = viewModel::onAction,
         onDetailClick = onDetailClick,
         onSettingsClick = onSettingsClick,
+        sharedTransitionScope = sharedTransitionScope,
+        animatedContentScope = animatedContentScope,
         modifier = modifier,
     )
 }
 
 @Composable
-private fun Screen(
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
-    screen: HomeViewModel.Screen,
-    onAction: (HomeViewModel.Action) -> Unit,
+private fun HomeUi(
+    uiState: HomeUiState,
+    onAction: (HomeAction) -> Unit,
     onDetailClick: (Long) -> Unit,
     onSettingsClick: () -> Unit,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -116,12 +116,12 @@ private fun Screen(
             }
         },
     ) { padding ->
-        val items = screen.articles
+        val items = uiState.articles
         if (items != null) {
             ArticleList(
                 items = items,
                 onItemClick = { onDetailClick(it.id) },
-                onLoadMore = { onAction(HomeViewModel.Action.LoadMoreItems) },
+                onLoadMore = { onAction(HomeAction.LoadMoreItems) },
                 sharedTransitionScope = sharedTransitionScope,
                 animatedContentScope = animatedContentScope,
                 modifier = Modifier.fillMaxSize(),

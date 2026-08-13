@@ -46,11 +46,11 @@ fun Detail(
     modifier: Modifier = Modifier,
 ) {
     val viewModel = metroViewModel<DetailViewModel>()
-    LaunchedEffect(id) { viewModel.load(id) }
-    val screen by viewModel.screen.collectAsStateWithLifecycle()
-    Screen(
+    LaunchedEffect(viewModel, id) { viewModel.load(id) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    DetailUi(
         id = id,
-        screen = screen,
+        uiState = uiState,
         onBack = onBack,
         sharedTransitionScope = sharedTransitionScope,
         animatedContentScope = animatedContentScope,
@@ -59,15 +59,15 @@ fun Detail(
 }
 
 @Composable
-private fun Screen(
+private fun DetailUi(
     id: Long,
-    screen: DetailViewModel.Screen,
+    uiState: DetailUiState,
     onBack: () -> Unit,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
-    val article = screen.article
+    val article = uiState.article
     Scaffold(
         modifier = modifier,
         topBar = {

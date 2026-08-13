@@ -108,8 +108,6 @@ private fun SharedTransitionScope.AppNavHost(
     ) {
         composable<AppRoute.Home> {
             Home(
-                sharedTransitionScope = this@AppNavHost,
-                animatedContentScope = this,
                 onDetailClick = dropUnlessResumed { articleId ->
                     navController.navigate(AppRoute.Detail(articleId)) {
                         launchSingleTop = true
@@ -120,6 +118,8 @@ private fun SharedTransitionScope.AppNavHost(
                         launchSingleTop = true
                     }
                 },
+                sharedTransitionScope = this@AppNavHost,
+                animatedContentScope = this,
             )
         }
         composable<AppRoute.Detail> { backStackEntry ->

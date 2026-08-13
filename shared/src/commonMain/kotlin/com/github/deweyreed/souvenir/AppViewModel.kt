@@ -36,7 +36,8 @@ class AppViewModel(
     private var loadJob: Job? = null
 
     fun load() {
-        if (loadJob?.isActive == true) return
+        if (loadJob != null) return
+        loadJob?.cancel()
         loadJob = viewModelScope.launch(ioDispatcher) {
             coroutineScope {
                 launch {

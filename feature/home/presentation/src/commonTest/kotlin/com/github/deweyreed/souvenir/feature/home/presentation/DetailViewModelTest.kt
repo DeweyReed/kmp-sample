@@ -37,45 +37,68 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun `load should update screen with article`() = runTest {
+    fun `load should update ui state with article`() = runTest {
         val article = ArticleEntity(1L, "Title", "Image", "Summary")
-        repository.articleFlow.value = article
+        repository.articleFlow(1L).value = article
 
         viewModel.load(1L)
         advanceUntilIdle()
 
-        assertEquals(article, viewModel.screen.value.article)
+        assertEquals(article, viewModel.uiState.value.article)
     }
 
     @Test
-    fun `load with different id should update screen`() = runTest {
+    fun `load with different id should switch observed article flow`() = runTest {
         val article1 = ArticleEntity(1L, "Title 1", "Image 1", "Summary 1")
         val article2 = ArticleEntity(2L, "Title 2", "Image 2", "Summary 2")
 
+        repository.articleFlow(1L).value = article1
         viewModel.load(1L)
-        repository.articleFlow.value = article1
         advanceUntilIdle()
-        assertEquals(article1, viewModel.screen.value.article)
+        assertEquals(article1, viewModel.uiState.value.article)
 
+        repository.articleFlow(2L).value = article2
         viewModel.load(2L)
-        repository.articleFlow.value = article2
         advanceUntilIdle()
-        assertEquals(article2, viewModel.screen.value.article)
+        assertEquals(article2, viewModel.uiState.value.article)
+
+        repository.articleFlow(1L).value = article1.copy(title = "Stale title")
+        advanceUntilIdle()
+
+        assertEquals(article2, viewModel.uiState.value.article)
+        assertEquals(listOf(1L, 2L), repository.requestedIds)
     }
 
     @Test
     fun `load should handle null items`() = runTest {
         viewModel.load(1L)
-        repository.articleFlow.value = null
+        repository.articleFlow(1L).value = null
         advanceUntilIdle()
 
-        assertNull(viewModel.screen.value.article)
+        assertNull(viewModel.uiState.value.article)
+    }
+
+    @Test
+    fun `load with same id should keep a single observation`() = runTest {
+        viewModel.load(1L)
+        viewModel.load(1L)
+        advanceUntilIdle()
+
+        assertEquals(listOf(1L), repository.requestedIds)
     }
 
     private class FakeArticleRepository : ArticleRepository {
-        val articleFlow = MutableStateFlow<ArticleEntity?>(null)
+        private val articleFlows =
+            mutableMapOf<Long, MutableStateFlow<ArticleEntity?>>()
+        val requestedIds = mutableListOf<Long>()
 
-        override fun getItemFlow(id: Long): Flow<ArticleEntity?> = articleFlow
+        fun articleFlow(id: Long): MutableStateFlow<ArticleEntity?> =
+            articleFlows.getOrPut(id) { MutableStateFlow(null) }
+
+        override fun getItemFlow(id: Long): Flow<ArticleEntity?> {
+            requestedIds += id
+            return articleFlow(id)
+        }
 
         override fun getItemsPagination(): Pagination<ArticleEntity> {
             error("Not used")

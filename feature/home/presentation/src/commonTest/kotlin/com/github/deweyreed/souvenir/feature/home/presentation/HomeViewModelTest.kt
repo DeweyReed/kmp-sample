@@ -42,7 +42,7 @@ class HomeViewModelTest {
         advanceUntilIdle()
 
         assertTrue(repository.clearItemsCalled)
-        assertEquals(emptyList(), viewModel.screen.value.articles)
+        assertEquals(emptyList(), viewModel.uiState.value.articles)
 
         val items = listOf(
             ArticleEntity(1L, "Title 1", "Image 1", "Summary 1"),
@@ -51,7 +51,7 @@ class HomeViewModelTest {
         repository.itemsFlow.value = items
         advanceUntilIdle()
 
-        assertEquals(items, viewModel.screen.value.articles)
+        assertEquals(items, viewModel.uiState.value.articles)
     }
 
     @Test
@@ -68,7 +68,7 @@ class HomeViewModelTest {
         viewModel.load()
         advanceUntilIdle()
 
-        viewModel.onAction(HomeViewModel.Action.LoadMoreItems)
+        viewModel.onAction(HomeAction.LoadMoreItems)
         advanceUntilIdle()
 
         assertTrue(repository.loadMoreCalled)

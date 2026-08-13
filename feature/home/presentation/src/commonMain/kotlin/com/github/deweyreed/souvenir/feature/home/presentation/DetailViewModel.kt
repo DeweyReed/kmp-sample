@@ -16,24 +16,26 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+internal data class DetailUiState(
+    val article: ArticleEntity? = null,
+)
+
 @Inject
 @ViewModelKey
 @ContributesIntoMap(AppScope::class)
-class DetailViewModel(private val repository: ArticleRepository) : ViewModel() {
-    data class Screen(
-        val article: ArticleEntity? = null,
-    )
-
-    private val _screen: MutableStateFlow<Screen> = MutableStateFlow(Screen())
-    val screen: StateFlow<Screen> = _screen.asStateFlow()
+internal class DetailViewModel(private val repository: ArticleRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(DetailUiState())
+    val uiState: StateFlow<DetailUiState> = _uiState.asStateFlow()
     private var loadJob: Job? = null
+    private var loadedArticleId: Long? = null
 
     fun load(id: Long) {
-        if (loadJob != null && _screen.value.article?.id == id) return
+        if (loadJob != null && loadedArticleId == id) return
         loadJob?.cancel()
+        loadedArticleId = id
         loadJob = viewModelScope.launch {
             repository.getItemFlow(id).collectLatest { item ->
-                _screen.update {
+                _uiState.update {
                     it.copy(article = item)
                 }
             }
