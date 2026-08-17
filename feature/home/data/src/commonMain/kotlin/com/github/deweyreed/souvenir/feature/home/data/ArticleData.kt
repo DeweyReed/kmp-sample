@@ -107,4 +107,8 @@ internal data class ArticleRemoteData(
             )
         }
     }
+
+    fun toDataList(): List<ArticleData> {
+        return results.map(Result::toData)
+    }
 }

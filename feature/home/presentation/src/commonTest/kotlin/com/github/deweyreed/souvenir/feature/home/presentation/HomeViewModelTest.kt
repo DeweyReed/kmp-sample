@@ -3,6 +3,7 @@ package com.github.deweyreed.souvenir.feature.home.presentation
 import com.github.deweyreed.souvenir.base.api.Pagination
 import com.github.deweyreed.souvenir.feature.home.api.ArticleEntity
 import com.github.deweyreed.souvenir.feature.home.api.ArticleRepository
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -37,12 +38,9 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `load should clear items and fetch pagination`() = runTest {
+    fun `load collects pagination items`() = runTest {
         viewModel.load()
         advanceUntilIdle()
-
-        assertTrue(repository.clearItemsCalled)
-        assertEquals(emptyList(), viewModel.uiState.value.articles)
 
         val items = listOf(
             ArticleEntity(1L, "Title 1", "Image 1", "Summary 1"),
@@ -55,12 +53,32 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `load should only run once`() = runTest {
+    fun `load exposes cached items while refresh is pending`() = runTest {
+        val cachedItems = listOf(
+            ArticleEntity(1L, "Cached", "Cached image", "Cached summary"),
+        )
+        repository.itemsFlow.value = cachedItems
+        repository.suspendRefresh = true
+
+        viewModel.load()
+        advanceUntilIdle()
+
+        try {
+            assertTrue(repository.refreshStarted.isCompleted)
+            assertEquals(cachedItems, viewModel.uiState.value.articles)
+        } finally {
+            repository.finishRefresh.complete(Unit)
+        }
+        advanceUntilIdle()
+    }
+
+    @Test
+    fun `load refreshes only once`() = runTest {
         viewModel.load()
         viewModel.load()
         advanceUntilIdle()
 
-        assertEquals(1, repository.clearItemsCallCount)
+        assertEquals(1, repository.refreshItemsCallCount)
     }
 
     @Test
@@ -77,8 +95,10 @@ class HomeViewModelTest {
     private class FakeArticleRepository : ArticleRepository {
         val itemsFlow =
             MutableStateFlow<List<ArticleEntity>>(emptyList())
-        var clearItemsCalled = false
-        var clearItemsCallCount = 0
+        var refreshItemsCallCount = 0
+        var suspendRefresh = false
+        val refreshStarted = CompletableDeferred<Unit>()
+        val finishRefresh = CompletableDeferred<Unit>()
         var loadMoreCalled = false
 
         override fun getItemsPagination(): Pagination<ArticleEntity> {
@@ -92,9 +112,12 @@ class HomeViewModelTest {
             error("Not used")
         }
 
-        override suspend fun clearItems() {
-            clearItemsCalled = true
-            clearItemsCallCount++
+        override suspend fun refreshItems() {
+            refreshItemsCallCount++
+            refreshStarted.complete(Unit)
+            if (suspendRefresh) {
+                finishRefresh.await()
+            }
         }
     }
 }

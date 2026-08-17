@@ -104,7 +104,7 @@ class DetailViewModelTest {
             error("Not used")
         }
 
-        override suspend fun clearItems() {
+        override suspend fun refreshItems() {
             error("Not used")
         }
     }

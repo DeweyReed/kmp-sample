@@ -1,17 +1,23 @@
 package com.github.deweyreed.souvenir.data
 
+import androidx.room.AutoMigration
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import com.github.deweyreed.souvenir.feature.home.data.ArticleDao
 import com.github.deweyreed.souvenir.feature.home.data.ArticleData
+import com.github.deweyreed.souvenir.feature.home.data.ArticlePagingStateData
 
 @Database(
     entities = [
         ArticleData::class,
+        ArticlePagingStateData::class,
     ],
-    version = 1,
+    version = 2,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+    ],
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {

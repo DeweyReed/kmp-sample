@@ -17,6 +17,9 @@ interface ArticleDao {
     @Query("SELECT * FROM Article WHERE id = :id LIMIT 1")
     fun getItemFlow(id: Long): Flow<ArticleData?>
 
+    @Query("SELECT next_page FROM ArticlePagingState WHERE id = 0")
+    suspend fun getNextPage(): String?
+
     @Upsert
     suspend fun insertItems(items: List<ArticleData>)
 
@@ -26,9 +29,20 @@ interface ArticleDao {
     @Query("DELETE FROM Article")
     suspend fun clearItems()
 
+    @Upsert
+    suspend fun upsertPagingState(pagingState: ArticlePagingStateData)
+
     @Transaction
-    suspend fun insertItemsWithoutDuplicates(items: List<ArticleData>) {
+    suspend fun replacePage(items: List<ArticleData>, nextPage: String?) {
+        clearItems()
+        insertItems(items)
+        upsertPagingState(ArticlePagingStateData(nextPage = nextPage))
+    }
+
+    @Transaction
+    suspend fun appendPage(items: List<ArticleData>, nextPage: String?) {
         items.forEach { deleteItemById(it.id) }
         insertItems(items)
+        upsertPagingState(ArticlePagingStateData(nextPage = nextPage))
     }
 }

@@ -34,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,6 +50,8 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.github.deweyreed.souvenir.feature.home.api.ArticleEntity
 import dev.zacsweers.metrox.viewmodel.metroViewModel
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import org.jetbrains.compose.resources.painterResource
 import souvenir.feature.home.presentation.generated.resources.Res
 import souvenir.feature.home.presentation.generated.resources.feature_home_open_in_new
@@ -148,10 +151,16 @@ private fun ArticleList(
     val state = rememberLazyStaggeredGridState()
 
     val currentOnLoadMore by rememberUpdatedState(onLoadMore)
-    val firstVisibleItemIndex = state.firstVisibleItemIndex
-    LaunchedEffect(items.size, firstVisibleItemIndex) {
-        if (items.size - firstVisibleItemIndex >= 10) return@LaunchedEffect
-        currentOnLoadMore()
+    LaunchedEffect(state) {
+        snapshotFlow {
+            val layoutInfo = state.layoutInfo
+            val lastVisibleIndex = layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                ?: return@snapshotFlow null
+            layoutInfo.totalItemsCount.takeIf { it - lastVisibleIndex <= 10 }
+        }
+            .distinctUntilChanged()
+            .filterNotNull()
+            .collect { currentOnLoadMore() }
     }
 
     val layoutDirection = LocalLayoutDirection.current
