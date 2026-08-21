@@ -5,7 +5,7 @@ plugins {
 group = "com.github.deweyreed.souvenir.buildlogic"
 
 java {
-    val javaVersion = JavaVersion.toVersion(libs.versions.jvmTarget.get())
+    val javaVersion = JavaVersion.toVersion(libs.versions.buildLogicJvmTarget.get())
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 }
@@ -13,7 +13,7 @@ java {
 kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget
-            .fromTarget(libs.versions.jvmTarget.get())
+            .fromTarget(libs.versions.buildLogicJvmTarget.get())
     }
 }
 
@@ -22,6 +22,7 @@ dependencies {
     compileOnly(plugin(libs.plugins.compose.multiplatform))
     compileOnly(plugin(libs.plugins.compose.compiler))
     compileOnly(plugin(libs.plugins.android.kmpLibrary))
+    compileOnly(plugin(libs.plugins.metro))
 }
 
 private fun plugin(plugin: Provider<PluginDependency>): Provider<String> {
@@ -42,6 +43,9 @@ gradlePlugin {
         }
         register(libs.plugins.convention.kmp.compose.get().pluginId) {
             implementationClass = "KmpComposeConventionPlugin"
+        }
+        register(libs.plugins.convention.metro.get().pluginId) {
+            implementationClass = "MetroConventionPlugin"
         }
     }
 }

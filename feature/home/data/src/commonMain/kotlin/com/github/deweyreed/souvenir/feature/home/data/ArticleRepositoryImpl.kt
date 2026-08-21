@@ -22,7 +22,7 @@ import kotlinx.coroutines.withContext
 
 @ContributesBinding(AppScope::class)
 @Inject
-class ArticleRepositoryImpl(
+internal class ArticleRepositoryImpl(
     @param:Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,
     private val dao: ArticleDao,
     private val httpClient: HttpClient,

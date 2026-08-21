@@ -1,5 +1,6 @@
 [versions]
-jvmTarget = "17"
+buildLogicJvmTarget = "21"
+appJvmTarget = "17"
 kotlin = "2.4.10"
 agp = "9.3.1"
 android-compileSdk = "37"
@@ -21,11 +22,12 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-metro = "dev.zacsweers.metro:1.4.0"
+metro = "dev.zacsweers.metro:1.4.2"
 room = { id = "androidx.room", version.ref = "room" }
 
 convention-kmp-library = { id = "convention-kmp-library" }
 convention-kmp-compose = { id = "convention-kmp-compose" }
+convention-metro = { id = "convention-metro" }
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -51,7 +53,7 @@ room-sqliteBundled = "androidx.sqlite:sqlite-bundled:2.7.0"
 datastore-core = "androidx.datastore:datastore:1.2.1"
 datastore-preferences = "androidx.datastore:datastore-preferences:1.2.1"
 
-metro-viewModelCompose = "dev.zacsweers.metro:metrox-viewmodel-compose:1.4.0"
+metro-viewModelCompose = "dev.zacsweers.metro:metrox-viewmodel-compose:1.4.2"
 
 ktor-core = "io.ktor:ktor-client-core:3.5.2"
 ktor-okhttp = "io.ktor:ktor-client-okhttp:3.5.2"

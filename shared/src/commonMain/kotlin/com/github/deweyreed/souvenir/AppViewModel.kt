@@ -20,14 +20,14 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class AppUiState(
+internal data class AppUiState(
     val theme: AppTheme = AppTheme.SYSTEM,
 )
 
 @Inject
 @ViewModelKey
 @ContributesIntoMap(AppScope::class)
-class AppViewModel(
+internal class AppViewModel(
     @Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,
     private val settings: Settings,
 ) : ViewModel() {

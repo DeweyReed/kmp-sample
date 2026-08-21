@@ -15,7 +15,7 @@ import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 import kotlin.reflect.KClass
 
 @DependencyGraph(AppScope::class)
-interface AppGraph : ViewModelGraph {
+internal interface AppGraph : ViewModelGraph {
     @Provides
     @Qualifiers.AppId
     fun getAppId(): String = "com.github.deweyreed.souvenir"
@@ -24,7 +24,7 @@ interface AppGraph : ViewModelGraph {
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
 @Inject
-class AppViewModelFactory(
+internal class AppViewModelFactory(
     override val viewModelProviders: Map<KClass<out ViewModel>, () -> ViewModel>,
     override val assistedFactoryProviders: Map<KClass<out ViewModel>, () -> ViewModelAssistedFactory>,
     override val manualAssistedFactoryProviders: Map<

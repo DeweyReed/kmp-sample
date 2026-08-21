@@ -18,7 +18,7 @@ import okio.Path.Companion.toPath
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
 @Inject
-class SettingsImpl(private val dataStore: DataStore<Preferences>) : Settings {
+internal class SettingsImpl(private val dataStore: DataStore<Preferences>) : Settings {
     override fun getBooleanFlow(key: String): Flow<Boolean?> {
         val preferencesKey = booleanPreferencesKey(key)
         return dataStore.data.map { it[preferencesKey] }

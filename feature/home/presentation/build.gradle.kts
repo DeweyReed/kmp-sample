@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.convention.kmp.compose)
-    alias(libs.plugins.metro)
+    alias(libs.plugins.convention.metro)
 }
 
 kotlin {

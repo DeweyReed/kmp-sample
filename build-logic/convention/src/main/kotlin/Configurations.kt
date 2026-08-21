@@ -1,46 +1,8 @@
 
-import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal val Project.libs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
-internal fun Project.configureKmpLibrary() {
-    apply(plugin = libs.findPlugin("kotlin-multiplatform").get().get().pluginId)
-    apply(plugin = libs.findPlugin("android-kmpLibrary").get().get().pluginId)
-
-    extensions.configure<KotlinMultiplatformExtension> {
-        configure<KotlinMultiplatformAndroidLibraryTarget> {
-            compileSdk {
-                version = release(
-                    libs.findVersion("android-compileSdk")
-                        .get().requiredVersion.toInt()
-                )
-            }
-            minSdk = libs.findVersion("android-minSdk").get().requiredVersion.toInt()
-        }
-        iosArm64()
-        iosSimulatorArm64()
-        jvm()
-    }
-}
-
-internal fun Project.confitureCompose() {
-    apply(plugin = libs.findPlugin("compose-multiplatform").get().get().pluginId)
-    apply(plugin = libs.findPlugin("compose-compiler").get().get().pluginId)
-
-    extensions.configure<ComposeCompilerGradlePluginExtension> {
-        val isolated = isolated
-        stabilityConfigurationFiles.addAll(
-            isolated.rootProject.projectDirectory.file("stability-config.conf")
-                .also { require(it.asFile.exists()) },
-        )
-    }
-}

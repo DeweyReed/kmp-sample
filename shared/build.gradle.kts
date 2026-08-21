@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.convention.kmp.compose)
+    alias(libs.plugins.convention.metro)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.metro)
 }
 
 kotlin {
