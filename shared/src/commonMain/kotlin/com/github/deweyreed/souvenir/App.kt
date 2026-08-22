@@ -11,14 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.dropUnlessResumed
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.ui.LocalNavAnimatedContentScope
+import androidx.navigation3.ui.NavDisplay
 import com.github.deweyreed.souvenir.base.api.AppTheme
 import com.github.deweyreed.souvenir.base.presentation.dropUnlessResumed
 import com.github.deweyreed.souvenir.feature.home.presentation.Detail
@@ -27,7 +29,6 @@ import com.github.deweyreed.souvenir.feature.settings.presentation.Settings
 import dev.zacsweers.metro.createGraph
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.metroViewModel
-import kotlinx.serialization.Serializable
 
 private val appGraph by lazy { createGraph<AppGraph>() }
 
@@ -54,13 +55,9 @@ private fun AppUi(
     uiState: AppUiState,
     modifier: Modifier = Modifier,
 ) {
-    val navController = rememberNavController()
     AppMaterialTheme(theme = uiState.theme) {
         SharedTransitionLayout {
-            AppNavHost(
-                navController = navController,
-                modifier = modifier,
-            )
+            AppNavDisplay(modifier = modifier)
         }
     }
 }
@@ -84,58 +81,51 @@ private fun AppMaterialTheme(
 private val LightColorScheme = lightColorScheme()
 private val DarkColorScheme = darkColorScheme()
 
-@Serializable
-private sealed interface AppRoute {
-    @Serializable
-    data object Home : AppRoute
-
-    @Serializable
-    data class Detail(val id: Long) : AppRoute
-
-    @Serializable
-    data object Settings : AppRoute
-}
-
 @Composable
-private fun SharedTransitionScope.AppNavHost(
-    navController: NavHostController,
+private fun SharedTransitionScope.AppNavDisplay(
     modifier: Modifier = Modifier,
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = AppRoute.Home,
+    val backStack = rememberNavBackStack(
+        configuration = AppNavigationSavedStateConfiguration,
+        AppRoute.Home,
+    )
+    val navigator = remember(backStack) { AppNavigator(backStack) }
+
+    NavDisplay(
+        backStack = backStack,
         modifier = modifier.fillMaxSize(),
-    ) {
-        composable<AppRoute.Home> {
-            Home(
-                onDetailClick = dropUnlessResumed { articleId ->
-                    navController.navigate(AppRoute.Detail(articleId)) {
-                        launchSingleTop = true
-                    }
-                },
-                onSettingsClick = dropUnlessResumed {
-                    navController.navigate(AppRoute.Settings) {
-                        launchSingleTop = true
-                    }
-                },
-                sharedTransitionScope = this@AppNavHost,
-                animatedContentScope = this,
-            )
-        }
-        composable<AppRoute.Detail> { backStackEntry ->
-            val route = backStackEntry.toRoute<AppRoute.Detail>()
-            Detail(
-                id = route.id,
-                onBack = dropUnlessResumed { navController.popBackStack() },
-                sharedTransitionScope = this@AppNavHost,
-                animatedContentScope = this,
-            )
-        }
-        composable<AppRoute.Settings> {
-            Settings(
-                onBack = dropUnlessResumed { navController.popBackStack() },
-                sharedTransitionScope = this@AppNavHost,
-            )
-        }
-    }
+        onBack = navigator::goBack,
+        entryDecorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator(),
+        ),
+        entryProvider = entryProvider {
+            entry<AppRoute.Home> {
+                Home(
+                    onDetailClick = dropUnlessResumed { articleId ->
+                        navigator.navigate(AppRoute.Detail(articleId))
+                    },
+                    onSettingsClick = dropUnlessResumed {
+                        navigator.navigate(AppRoute.Settings, singleTop = true)
+                    },
+                    sharedTransitionScope = this@AppNavDisplay,
+                    animatedContentScope = LocalNavAnimatedContentScope.current,
+                )
+            }
+            entry<AppRoute.Detail> { route ->
+                Detail(
+                    id = route.id,
+                    onBack = dropUnlessResumed { navigator.goBack() },
+                    sharedTransitionScope = this@AppNavDisplay,
+                    animatedContentScope = LocalNavAnimatedContentScope.current,
+                )
+            }
+            entry<AppRoute.Settings> {
+                Settings(
+                    onBack = dropUnlessResumed { navigator.goBack() },
+                    sharedTransitionScope = this@AppNavDisplay,
+                )
+            }
+        },
+    )
 }

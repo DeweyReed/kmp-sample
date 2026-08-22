@@ -10,7 +10,6 @@ android-targetSdk = "37"
 version-code = "1"
 version-name = "1.0.0"
 
-ksp = "2.3.10"
 room3 = "3.0.1"
 
 [plugins]
@@ -21,7 +20,7 @@ compose-multiplatform = "org.jetbrains.compose:1.11.1"
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ksp = { id = "com.google.devtools.ksp", version = "2.3.10" }
 metro = "dev.zacsweers.metro:1.4.2"
 room3 = { id = "androidx.room3", version.ref = "room3" }
 
@@ -43,7 +42,8 @@ compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
 compose-resources = "org.jetbrains.compose.components:components-resources:1.11.1"
 
 androidx-activity-compose = "androidx.activity:activity-compose:1.13.0"
-androidx-lifecycle-viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0"
+androidx-lifecycle-viewModelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.11.0" }
+androidx-lifecycle-viewModelNav3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version = "2.11.0" }
 androidx-startup = "androidx.startup:startup-runtime:1.2.0"
 
 room3-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room3" }
@@ -66,6 +66,6 @@ ktor-mock = "io.ktor:ktor-client-mock:3.5.2"
 coil-core = "io.coil-kt.coil3:coil-compose:3.5.0"
 coil-ktor = "io.coil-kt.coil3:coil-network-ktor3:3.5.0"
 
-navigation = "org.jetbrains.androidx.navigation:navigation-compose:2.9.2"
+navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version = "1.1.1" }
 
 paths = "me.sujanpoudel.multiplatform.utils:multiplatform-paths:0.2.2"

@@ -25,7 +25,8 @@ kotlin {
             implementation(projects.data)
 
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.navigation)
+            implementation(libs.navigation3.ui)
+            implementation(libs.androidx.lifecycle.viewModelNav3)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

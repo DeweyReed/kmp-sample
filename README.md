@@ -46,8 +46,8 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 ### UI
 
 - [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/) - UI framework
-- [AndroidX Navigation Compose](https://developer.android.com/jetpack/compose/navigation) -
-  Type-safe navigation
+- [Navigation 3 for Compose Multiplatform](https://kotlinlang.org/docs/multiplatform/compose-navigation-3.html) -
+  Type-safe, saveable navigation
 - [Coil](https://coil-kt.github.io/coil/) - Image loading
 
 ### Data
@@ -70,7 +70,7 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 
 - [x] Replace Koin with Metro(Kotlin 2.3.20)
 - [x] Add `feature:settings`
-- [ ] Replace Nav2 with Nav3
+- [x] Replace Nav2 with Nav3
 - [ ] Room 3
 - [ ] Add icons
 - [ ] Build binaries with CI
