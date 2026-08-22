@@ -120,7 +120,7 @@ private fun HomeUi(
         },
     ) { padding ->
         val items = uiState.articles
-        if (items != null) {
+        if (uiState.isInitialContentReady && items != null) {
             ArticleList(
                 items = items,
                 onItemClick = { onDetailClick(it.id) },

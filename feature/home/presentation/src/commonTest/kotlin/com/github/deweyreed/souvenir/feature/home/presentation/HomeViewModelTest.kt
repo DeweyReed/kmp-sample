@@ -9,15 +9,19 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
@@ -53,7 +57,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `load exposes cached items while refresh is pending`() = runTest {
+    fun `cached items become ready after initial wait while refresh is pending`() = runTest {
         val cachedItems = listOf(
             ArticleEntity(1L, "Cached", "Cached image", "Cached summary"),
         )
@@ -61,11 +65,20 @@ class HomeViewModelTest {
         repository.suspendRefresh = true
 
         viewModel.load()
-        advanceUntilIdle()
+        runCurrent()
 
         try {
             assertTrue(repository.refreshStarted.isCompleted)
             assertEquals(cachedItems, viewModel.uiState.value.articles)
+            assertFalse(viewModel.uiState.value.isInitialContentReady)
+
+            advanceTimeBy(999.milliseconds)
+            runCurrent()
+            assertFalse(viewModel.uiState.value.isInitialContentReady)
+
+            advanceTimeBy(1.milliseconds)
+            runCurrent()
+            assertTrue(viewModel.uiState.value.isInitialContentReady)
         } finally {
             repository.finishRefresh.complete(Unit)
         }

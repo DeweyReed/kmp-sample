@@ -11,15 +11,18 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 internal data class HomeUiState(
     val articles: List<ArticleEntity>? = null,
+    val isInitialContentReady: Boolean = false,
 )
 
 internal sealed interface HomeAction {
@@ -39,6 +42,14 @@ internal class HomeViewModel(private val repository: ArticleRepository) : ViewMo
         if (loadJob != null) return
         loadJob = viewModelScope.launch {
             coroutineScope {
+                launch {
+                    // TODO: A better paging impl
+                    // Avoid briefly showing cached content immediately before refreshed content.
+                    delay(1.seconds)
+                    _uiState.update {
+                        it.copy(isInitialContentReady = true)
+                    }
+                }
                 launch {
                     repository.refreshItems()
                 }
