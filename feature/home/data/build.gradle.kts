@@ -13,6 +13,8 @@ kotlin {
             dependencies {
                 implementation(projects.base.data)
                 implementation(projects.feature.home.api)
+
+                implementation(libs.room3.runtime)
             }
         }
         commonTest {

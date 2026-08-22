@@ -1,6 +1,6 @@
 package com.github.deweyreed.souvenir.data
 
-import androidx.room.RoomDatabase
+import androidx.room3.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.github.deweyreed.souvenir.feature.home.data.ArticleDao
 import dev.zacsweers.metro.AppScope

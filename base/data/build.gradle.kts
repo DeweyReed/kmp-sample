@@ -10,8 +10,6 @@ kotlin {
         commonMain.dependencies {
             api(projects.base.api)
 
-            api(libs.room.runtime)
-
             api(libs.datastore.core)
             api(libs.datastore.preferences)
 

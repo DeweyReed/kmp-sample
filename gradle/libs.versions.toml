@@ -11,7 +11,7 @@ version-code = "1"
 version-name = "1.0.0"
 
 ksp = "2.3.10"
-room = "2.8.4"
+room3 = "3.0.1"
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -23,7 +23,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 metro = "dev.zacsweers.metro:1.4.2"
-room = { id = "androidx.room", version.ref = "room" }
+room3 = { id = "androidx.room3", version.ref = "room3" }
 
 convention-kmp-library = { id = "convention-kmp-library" }
 convention-kmp-compose = { id = "convention-kmp-compose" }
@@ -46,9 +46,9 @@ androidx-activity-compose = "androidx.activity:activity-compose:1.13.0"
 androidx-lifecycle-viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0"
 
-room-runtime = "androidx.room:room-runtime:2.8.4"
-room-compiler = "androidx.room:room-compiler:2.8.4"
-room-sqliteBundled = "androidx.sqlite:sqlite-bundled:2.7.0"
+room3-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room3" }
+room3-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room3" }
+androidx-sqlite-bundled = "androidx.sqlite:sqlite-bundled:2.7.0"
 
 datastore-core = "androidx.datastore:datastore:1.2.1"
 datastore-preferences = "androidx.datastore:datastore-preferences:1.2.1"

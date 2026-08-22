@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.convention.kmp.library)
     alias(libs.plugins.convention.metro)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.room)
+    alias(libs.plugins.room3)
 }
 
 kotlin {
@@ -17,8 +17,8 @@ kotlin {
 
                 implementation(libs.kotlinx.io.byteString)
 
-                implementation(libs.room.runtime)
-                implementation(libs.room.sqliteBundled)
+                api(libs.room3.runtime)
+                implementation(libs.androidx.sqlite.bundled)
 
                 implementation(libs.ktor.core)
                 implementation(libs.ktor.contentNegotiation)
@@ -40,13 +40,13 @@ kotlin {
     }
 }
 
-room {
+room3 {
     schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
-    add("kspAndroid", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspJvm", libs.room.compiler)
+    add("kspAndroid", libs.room3.compiler)
+    add("kspIosArm64", libs.room3.compiler)
+    add("kspIosSimulatorArm64", libs.room3.compiler)
+    add("kspJvm", libs.room3.compiler)
 }
