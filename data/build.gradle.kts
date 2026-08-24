@@ -15,6 +15,7 @@ kotlin {
                 api(projects.base.data)
                 api(projects.feature.home.data)
 
+                implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.io.byteString)
 
                 api(libs.room3.runtime)

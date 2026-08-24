@@ -1,10 +1,7 @@
 package com.github.deweyreed.souvenir
 
 import androidx.navigation3.runtime.NavKey
-import androidx.savedstate.serialization.SavedStateConfiguration
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 
 @Serializable
 internal sealed interface AppRoute : NavKey {
@@ -18,21 +15,7 @@ internal sealed interface AppRoute : NavKey {
     data object Settings : AppRoute
 }
 
-internal val AppRouteSerializersModule = SerializersModule {
-    polymorphic(NavKey::class) {
-        subclass(AppRoute.Home::class, AppRoute.Home.serializer())
-        subclass(AppRoute.Detail::class, AppRoute.Detail.serializer())
-        subclass(AppRoute.Settings::class, AppRoute.Settings.serializer())
-    }
-}
-
-internal val AppNavigationSavedStateConfiguration = SavedStateConfiguration {
-    serializersModule = AppRouteSerializersModule
-}
-
-internal class AppNavigator(
-    private val backStack: MutableList<NavKey>,
-) {
+internal class AppNavigator(private val backStack: MutableList<AppRoute>) {
     fun navigate(route: AppRoute, singleTop: Boolean = false) {
         if (singleTop && backStack.lastOrNull() == route) {
             return

@@ -34,6 +34,7 @@ kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0"
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0"
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0"
 kotlinx-coroutines-swing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.11.0"
+kotlinx-serialization-core = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0"
 kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0"
 kotlinx-io-byteString = "org.jetbrains.kotlinx:kotlinx-io-bytestring:0.9.1"
 

@@ -24,7 +24,7 @@ kotlin {
             implementation(projects.feature.settings.presentation)
             implementation(projects.data)
 
-            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.serialization.core)
             implementation(libs.navigation3.ui)
             implementation(libs.androidx.lifecycle.viewModelNav3)
         }
