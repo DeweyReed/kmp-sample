@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.entryProvider
@@ -24,7 +23,6 @@ import androidx.navigation3.runtime.serialization.NavBackStackSerializer
 import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import androidx.navigation3.ui.NavDisplay
 import com.github.deweyreed.souvenir.base.api.AppTheme
-import com.github.deweyreed.souvenir.base.presentation.dropUnlessResumed
 import com.github.deweyreed.souvenir.feature.home.presentation.Detail
 import com.github.deweyreed.souvenir.feature.home.presentation.Home
 import com.github.deweyreed.souvenir.feature.settings.presentation.Settings
@@ -105,10 +103,10 @@ private fun SharedTransitionScope.AppNavDisplay(
         entryProvider = entryProvider {
             entry<AppRoute.Home> {
                 Home(
-                    onDetailClick = dropUnlessResumed { articleId ->
-                        navigator.navigate(AppRoute.Detail(articleId))
+                    onDetailClick = { articleId ->
+                        navigator.navigate(route = AppRoute.Detail(articleId), singleTop = true)
                     },
-                    onSettingsClick = dropUnlessResumed {
+                    onSettingsClick = {
                         navigator.navigate(AppRoute.Settings, singleTop = true)
                     },
                     sharedTransitionScope = this@AppNavDisplay,
@@ -118,14 +116,14 @@ private fun SharedTransitionScope.AppNavDisplay(
             entry<AppRoute.Detail> { route ->
                 Detail(
                     id = route.id,
-                    onBack = dropUnlessResumed { navigator.goBack() },
+                    onBack = navigator::goBack,
                     sharedTransitionScope = this@AppNavDisplay,
                     animatedContentScope = LocalNavAnimatedContentScope.current,
                 )
             }
             entry<AppRoute.Settings> {
                 Settings(
-                    onBack = dropUnlessResumed { navigator.goBack() },
+                    onBack = navigator::goBack,
                     sharedTransitionScope = this@AppNavDisplay,
                 )
             }
