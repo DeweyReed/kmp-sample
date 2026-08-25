@@ -71,7 +71,7 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 - [x] Replace Koin with Metro(Kotlin 2.3.20)
 - [x] Add `feature:settings`
 - [x] Replace Nav2 with Nav3
-- [ ] Room 3
+- [x] Room 3
 - [ ] Add icons
 - [ ] Build binaries with CI
 
