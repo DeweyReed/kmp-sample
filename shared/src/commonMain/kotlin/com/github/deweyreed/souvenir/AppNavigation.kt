@@ -25,7 +25,7 @@ internal class AppNavigator(private val backStack: MutableList<AppRoute>) {
 
     fun goBack() {
         if (backStack.size > 1) {
-            backStack.removeLast()
+            backStack.removeLastOrNull()
         }
     }
 }

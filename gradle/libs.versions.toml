@@ -20,6 +20,7 @@ compose-multiplatform = "org.jetbrains.compose:1.11.1"
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+android-lint = { id = "com.android.lint", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version = "2.3.10" }
 metro = "dev.zacsweers.metro:1.4.2"
 room3 = { id = "androidx.room3", version.ref = "room3" }
@@ -41,6 +42,8 @@ kotlinx-io-byteString = "org.jetbrains.kotlinx:kotlinx-io-bytestring:0.9.1"
 compose-foundation = "org.jetbrains.compose.foundation:foundation:1.11.1"
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
 compose-resources = "org.jetbrains.compose.components:components-resources:1.11.1"
+
+compose-lintChecks = "com.slack.lint.compose:compose-lint-checks:1.5.5"
 
 androidx-activity-compose = "androidx.activity:activity-compose:1.13.0"
 androidx-lifecycle-viewModelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.11.0" }

@@ -62,9 +62,14 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 - `kotlin-test` - Unit testing
 - `ktor-client-mock` - Mocking API responses
 
+### Static Analysis
+
+- **Android Lint** - `com.android.lint` plugin
+- [compose-lints](https://slackhq.github.io/compose-lints/)
+
 ### CI/CD
 
-- **GitHub Actions** - Continuous Integration for automated building and testing
+- **GitHub Actions** - Continuous Integration for automated building, testing, and linting
 
 ## Roadmap
 

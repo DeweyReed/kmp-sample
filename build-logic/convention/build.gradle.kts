@@ -22,6 +22,7 @@ dependencies {
     compileOnly(plugin(libs.plugins.compose.multiplatform))
     compileOnly(plugin(libs.plugins.compose.compiler))
     compileOnly(plugin(libs.plugins.android.kmpLibrary))
+    compileOnly(plugin(libs.plugins.android.lint))
     compileOnly(plugin(libs.plugins.metro))
 }
 
