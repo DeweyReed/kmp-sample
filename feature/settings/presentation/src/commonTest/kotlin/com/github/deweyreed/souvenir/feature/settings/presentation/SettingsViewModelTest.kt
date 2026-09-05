@@ -29,10 +29,7 @@ class SettingsViewModelTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         settings = FakeSettings()
-        viewModel = SettingsViewModel(
-            ioDispatcher = testDispatcher,
-            settings = settings,
-        )
+        viewModel = SettingsViewModel(settings = settings)
     }
 
     @AfterTest

@@ -3,7 +3,6 @@ package com.github.deweyreed.souvenir.feature.settings.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.deweyreed.souvenir.base.api.AppTheme
-import com.github.deweyreed.souvenir.base.api.Qualifiers
 import com.github.deweyreed.souvenir.base.api.Settings
 import com.github.deweyreed.souvenir.base.api.getAppThemeFlow
 import com.github.deweyreed.souvenir.base.api.setAppTheme
@@ -11,7 +10,6 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +31,6 @@ internal sealed interface SettingsAction {
 @ViewModelKey
 @ContributesIntoMap(AppScope::class)
 internal class SettingsViewModel(
-    @Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,
     private val settings: Settings,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SettingsUiState())
@@ -43,7 +40,7 @@ internal class SettingsViewModel(
     fun load() {
         if (loadJob != null) return
         loadJob?.cancel()
-        loadJob = viewModelScope.launch(ioDispatcher) {
+        loadJob = viewModelScope.launch {
             coroutineScope {
                 launch {
                     settings.getAppThemeFlow().collectLatest { theme ->
@@ -57,7 +54,7 @@ internal class SettingsViewModel(
     fun onAction(action: SettingsAction) {
         when (action) {
             is SettingsAction.SetTheme -> {
-                viewModelScope.launch(ioDispatcher) {
+                viewModelScope.launch {
                     settings.setAppTheme(action.theme)
                 }
             }

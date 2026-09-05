@@ -3,14 +3,12 @@ package com.github.deweyreed.souvenir
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.deweyreed.souvenir.base.api.AppTheme
-import com.github.deweyreed.souvenir.base.api.Qualifiers
 import com.github.deweyreed.souvenir.base.api.Settings
 import com.github.deweyreed.souvenir.base.api.getAppThemeFlow
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +26,6 @@ internal data class AppUiState(
 @ViewModelKey
 @ContributesIntoMap(AppScope::class)
 internal class AppViewModel(
-    @Qualifiers.Dispatchers.Io private val ioDispatcher: CoroutineDispatcher,
     private val settings: Settings,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AppUiState())
@@ -38,7 +35,7 @@ internal class AppViewModel(
     fun load() {
         if (loadJob != null) return
         loadJob?.cancel()
-        loadJob = viewModelScope.launch(ioDispatcher) {
+        loadJob = viewModelScope.launch {
             coroutineScope {
                 launch {
                     settings.getAppThemeFlow().collectLatest { theme ->
