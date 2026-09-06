@@ -1,24 +1,31 @@
 package com.github.deweyreed.souvenir.data
 
 import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.github.deweyreed.souvenir.base.api.Qualifiers
 import com.github.deweyreed.souvenir.base.api.Settings
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import okio.Path.Companion.toPath
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
 @Inject
-internal class SettingsImpl(private val dataStore: DataStore<Preferences>) : Settings {
+internal class SettingsImpl(
+    private val dataStore: DataStore<Preferences>,
+    @Qualifiers.CoroutineScope.Application private val applicationScope: CoroutineScope,
+) : Settings {
     override fun getBooleanFlow(key: String): Flow<Boolean?> {
         val preferencesKey = booleanPreferencesKey(key)
         return dataStore.data.map { it[preferencesKey] }
@@ -26,7 +33,7 @@ internal class SettingsImpl(private val dataStore: DataStore<Preferences>) : Set
 
     override suspend fun setBoolean(key: String, value: Boolean?) {
         val preferencesKey = booleanPreferencesKey(key)
-        dataStore.edit {
+        edit {
             if (value != null) {
                 it[preferencesKey] = value
             } else {
@@ -42,13 +49,19 @@ internal class SettingsImpl(private val dataStore: DataStore<Preferences>) : Set
 
     override suspend fun setString(key: String, value: String?) {
         val preferencesKey = stringPreferencesKey(key)
-        dataStore.edit {
+        edit {
             if (value != null) {
                 it[preferencesKey] = value
             } else {
                 it.remove(preferencesKey)
             }
         }
+    }
+
+    private suspend fun edit(transform: (MutablePreferences) -> Unit) {
+        applicationScope.launch {
+            dataStore.edit(transform)
+        }.join()
     }
 }
 

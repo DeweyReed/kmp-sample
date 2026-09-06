@@ -6,6 +6,11 @@ object Qualifiers {
     @Qualifier
     annotation class AppId
 
+    object CoroutineScope {
+        @Qualifier
+        annotation class Application
+    }
+
     object Dispatchers {
         @Qualifier
         annotation class Io

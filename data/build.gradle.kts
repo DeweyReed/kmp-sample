@@ -28,6 +28,12 @@ kotlin {
                 implementation(libs.paths)
             }
         }
+        commonTest {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
+            }
+        }
         androidMain.dependencies {
             implementation(libs.androidx.startup)
             implementation(libs.ktor.okhttp)
