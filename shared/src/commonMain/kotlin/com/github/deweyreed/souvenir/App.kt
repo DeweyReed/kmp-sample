@@ -9,7 +9,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSerializable
@@ -45,7 +45,8 @@ fun App() {
 private fun AppRoot(
     viewModel: AppViewModel = metroViewModel(),
 ) {
-    LaunchedEffect(viewModel) { viewModel.load() }
+    @Suppress("ComposeViewModelForwarding")
+    SideEffect(viewModel) { viewModel.load() }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     AppUi(uiState = uiState)
 }

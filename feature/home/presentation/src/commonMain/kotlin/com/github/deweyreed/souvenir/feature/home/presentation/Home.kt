@@ -32,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
@@ -66,7 +67,7 @@ fun Home(
     modifier: Modifier = Modifier,
 ) {
     val viewModel = metroViewModel<HomeViewModel>()
-    LaunchedEffect(viewModel) { viewModel.load() }
+    SideEffect(viewModel) { viewModel.load() }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     HomeUi(
         uiState = uiState,

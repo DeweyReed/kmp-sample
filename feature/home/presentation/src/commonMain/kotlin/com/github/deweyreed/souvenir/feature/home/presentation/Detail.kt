@@ -22,7 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -46,7 +46,7 @@ fun Detail(
     modifier: Modifier = Modifier,
 ) {
     val viewModel = metroViewModel<DetailViewModel>()
-    LaunchedEffect(viewModel, id) { viewModel.load(id) }
+    SideEffect(viewModel, id) { viewModel.load(id) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     DetailUi(
         id = id,

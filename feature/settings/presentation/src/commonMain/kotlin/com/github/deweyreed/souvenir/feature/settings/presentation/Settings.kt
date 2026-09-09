@@ -22,7 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -44,7 +44,7 @@ fun Settings(
     modifier: Modifier = Modifier,
 ) {
     val viewModel = metroViewModel<SettingsViewModel>()
-    LaunchedEffect(viewModel) { viewModel.load() }
+    SideEffect(viewModel) { viewModel.load() }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     SettingsUi(
         uiState = uiState,
