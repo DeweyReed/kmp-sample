@@ -19,7 +19,6 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
-import androidx.navigation3.runtime.serialization.NavBackStackSerializer
 import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import androidx.navigation3.ui.NavDisplay
 import com.github.deweyreed.souvenir.base.api.AppTheme
@@ -29,6 +28,7 @@ import com.github.deweyreed.souvenir.feature.settings.presentation.Settings
 import dev.zacsweers.metro.createGraph
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.metroViewModel
+import kotlinx.serialization.serializer
 
 private val appGraph by lazy { createGraph<AppGraph>() }
 
@@ -86,8 +86,8 @@ private val DarkColorScheme = darkColorScheme()
 private fun SharedTransitionScope.AppNavDisplay(
     modifier: Modifier = Modifier,
 ) {
-    val backStack = rememberSerializable(
-        serializer = NavBackStackSerializer<AppRoute>(),
+    val backStack: NavBackStack<AppRoute> = rememberSerializable(
+        serializer = serializer(),
     ) {
         NavBackStack(AppRoute.Home)
     }
