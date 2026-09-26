@@ -34,42 +34,20 @@ Convention Plugins** (`build-logic`). The project is split into the following la
 
 ## Tech Stack
 
-### Architecture
-
-- [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) - Targeting Android, iOS,
-  and Desktop
-- **Gradle Convention Plugins** & **Version Catalogs** - Scalable, type-safe build logic
-- [Metro](https://zacsweers.github.io/metro/) - Dependency Injection
-- [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs/flow.html) -
-  Asynchronous programming
-
-### UI
-
-- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/) - UI framework
-- [Navigation 3 for Compose Multiplatform](https://kotlinlang.org/docs/multiplatform/compose-navigation-3.html) -
-  Type-safe, saveable navigation
-- [Coil](https://coil-kt.github.io/coil/) - Image loading
-
-### Data
-
-- [Ktor](https://ktor.io/) - Asynchronous HTTP client
-- [Room (KMP)](https://developer.android.com/kotlin/multiplatform/room) - Local SQLite database
-- [DataStore](https://developer.android.com/kotlin/multiplatform/datastore) - Local storage
-- [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization) - JSON parsing
-
-### Testing
-
-- `kotlin-test` - Unit testing
-- `ktor-client-mock` - Mocking API responses
-
-### Static Analysis
-
-- **Android Lint** - `com.android.lint` plugin
-- [compose-lints](https://slackhq.github.io/compose-lints/)
-
-### CI/CD
-
-- **GitHub Actions** - Continuous Integration for automated building, testing, and linting
+- **Core:** [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html),
+  [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html),
+  [Flow](https://kotlinlang.org/docs/flow.html), [Metro](https://zacsweers.github.io/metro/) (
+  dependency injection)
+- **UI:** [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/),
+  [Navigation 3](https://kotlinlang.org/docs/multiplatform/compose-navigation-3.html),
+  [Coil](https://coil-kt.github.io/coil/)
+- **Data:** [Ktor](https://ktor.io/),
+  [Room 3](https://developer.android.com/kotlin/multiplatform/room),
+  [DataStore](https://developer.android.com/kotlin/multiplatform/datastore),
+  [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization)
+- **Build and CI:** Gradle convention plugins, version catalogs, GitHub Actions
+- **Tests and lint:** `kotlin-test`, `ktor-client-mock`, Android Lint,
+  [compose-lints](https://slackhq.github.io/compose-lints/)
 
 ## Roadmap
 
