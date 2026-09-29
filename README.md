@@ -8,11 +8,11 @@ list-detail view of the latest spaceflight articles.
 
 ## AI Disclosure
 
-AI code generation is used in the development of this project. I review every generated line to
-check whether it is necessary and follows best practices. For example, I refined the
-[convention plugins' build file](build-logic/convention/build.gradle.kts) line by line to keep the
-configuration minimal. I also reworked the
-[Navigation 3 back stack](shared/src/commonMain/kotlin/com/github/deweyreed/souvenir/App.kt)
+This project is developed with AI assistance. I guide the implementation and review every
+AI-generated line to check whether it is necessary and follows best practices. For example, I
+refined the [convention plugins' build file](build-logic/convention/build.gradle.kts) line by line
+to keep the configuration minimal. I also reworked
+the [Navigation 3 back stack](shared/src/commonMain/kotlin/com/github/deweyreed/souvenir/App.kt)
 multiple times to find the most straightforward approach.
 
 ## Screenshots
