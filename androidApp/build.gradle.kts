@@ -6,15 +6,8 @@ plugins {
 }
 
 kotlin {
-    target {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.fromTarget(libs.versions.appJvmTarget.get()))
-        }
-    }
-    dependencies {
-        implementation(projects.shared)
-        implementation(libs.androidx.activity.compose)
-        lintChecks(libs.compose.lintChecks)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.fromTarget(libs.versions.appJvmTarget.get()))
     }
 }
 
@@ -32,14 +25,10 @@ android {
         versionName = libs.versions.version.name.get()
     }
     compileOptions {
-        val javaVersion = JavaVersion.toVersion(libs.versions.appJvmTarget.get().toInt())
+        val javaVersion =
+            JavaVersion.toVersion(libs.versions.appJvmTarget.get().toInt())
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
     buildTypes {
         getByName("release") {
@@ -48,4 +37,10 @@ android {
             }
         }
     }
+}
+
+dependencies {
+    implementation(projects.shared)
+    implementation(libs.androidx.activity.compose)
+    lintChecks(libs.compose.lintChecks)
 }

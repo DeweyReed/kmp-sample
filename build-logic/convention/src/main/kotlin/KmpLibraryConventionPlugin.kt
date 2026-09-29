@@ -3,6 +3,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class KmpLibraryConventionPlugin : Plugin<Project> {
@@ -24,6 +25,13 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                 }
                 minSdk =
                     target.libs.findVersion("android-minSdk").get().requiredVersion.toInt()
+                compilerOptions {
+                    jvmTarget.set(
+                        JvmTarget.fromTarget(
+                            target.libs.findVersion("appJvmTarget").get().requiredVersion
+                        )
+                    )
+                }
             }
             iosArm64()
             iosSimulatorArm64()
