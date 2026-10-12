@@ -2,7 +2,7 @@
 buildLogicJvmTarget = "21"
 appJvmTarget = "17"
 kotlin = "2.4.10"
-agp = "9.3.2"
+agp = "9.3.3"
 android-compileSdk = "37"
 android-minSdk = "24"
 android-targetSdk = "37"
@@ -16,7 +16,7 @@ room3 = "3.0.2"
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-compose-multiplatform = "org.jetbrains.compose:1.12.0"
+compose-multiplatform = "org.jetbrains.compose:1.12.1"
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-kmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
@@ -39,11 +39,11 @@ kotlinx-serialization-core = "org.jetbrains.kotlinx:kotlinx-serialization-core:1
 kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0"
 kotlinx-io-byteString = "org.jetbrains.kotlinx:kotlinx-io-bytestring:0.9.1"
 
-compose-foundation = "org.jetbrains.compose.foundation:foundation:1.12.0"
+compose-foundation = "org.jetbrains.compose.foundation:foundation:1.12.1"
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
-compose-resources = "org.jetbrains.compose.components:components-resources:1.12.0"
+compose-resources = "org.jetbrains.compose.components:components-resources:1.12.1"
 
-compose-lintChecks = "com.slack.lint.compose:compose-lint-checks:1.6.0"
+compose-lintChecks = "com.slack.lint.compose:compose-lint-checks:1.6.1"
 
 androidx-activity-compose = "androidx.activity:activity-compose:1.13.0"
 androidx-lifecycle-viewModelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.11.0" }
@@ -70,6 +70,6 @@ ktor-mock = "io.ktor:ktor-client-mock:3.5.2"
 coil-core = "io.coil-kt.coil3:coil-compose:3.6.1"
 coil-ktor = "io.coil-kt.coil3:coil-network-ktor3:3.6.2"
 
-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version = "1.1.1" }
+navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version = "1.1.2" }
 
 paths = "me.sujanpoudel.multiplatform.utils:multiplatform-paths:0.2.2"
